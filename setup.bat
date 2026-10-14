@@ -35,7 +35,7 @@ if errorlevel 1 (
 )
 mkdir voices 2>nul
 mkdir dl 2>nul
-for %%V in (en_US-ryan-medium) do (
+for %%V in (en_US-ryan-medium de_DE-thorsten-medium) do (
   if not exist "voices\%%V\%%V.onnx" (
     (
       echo  Lade Stimme %%V ...
