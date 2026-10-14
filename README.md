@@ -13,6 +13,12 @@ Ein kostenloses Lernprogramm für Windows, um Englisch (Niveau B1) in kleinen Sc
 
 Windows meldet beim ersten Start vielleicht „Der Computer wurde durch Windows geschützt“, weil das Programm nicht signiert ist. Klicke dann auf **Weitere Informationen** und **Trotzdem ausführen**.
 
+## Simulation ansehen / See it in action
+
+Eine interaktive, zweisprachige Simulation (Deutsch/English) zeigt die Oberfläche, den Excel-Import, den Export als PDF und Excel, die MP3-Erstellung, die Installation und alle Lizenzhinweise:
+**https://varvergergos.github.io/Vokabeltrainer_Englisch/**
+(Oder die Datei `docs/index.html` herunterladen und im Browser öffnen.)
+
 ## Der erste Start
 
 Das Programm startet leer. Du legst eigene Kapitel an oder liest sie aus Excel ein. Dafür liegt im Ordner `daten` die Datei **`Kapitel_Vorlage.xlsx`**. Fülle sie aus und wähle im Programm **Kapitel → Kapitel aus Excel**. Eine Bedienungsanleitung findest du im Programm unter **Hilfe** und im Startmenü.

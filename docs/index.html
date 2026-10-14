@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vokabeltrainer Englisch B1 – Simulation</title>
+<meta name="description" content="Interaktive Simulation des Vokabeltrainers Englisch B1 (Deutsch/English) – Oberfläche, Excel-Import, Export, MP3, Installation und Lizenzen.">
+<style>
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --ink:#16212b; --muted:#566574; --line:#d9e0e7;
+  --accent:#0b7a75; --accent-ink:#ffffff; --sel:#e0f1ef; --warn:#8a4300; --warnbg:#fff1e0;
+  --ok:#17803d; --okbg:#e3f5e8; --bad:#b3261e; --badbg:#fde8e6; --title:#dfe5ea; --shadow:rgba(20,35,50,.16);
+  --font:"Segoe UI","Atkinson Hyperlegible",system-ui,-apple-system,Roboto,sans-serif; --fs:17px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#11171c; --surface:#1a2229; --ink:#e7edf2; --muted:#98a7b4; --line:#2a353e;
+  --accent:#41c3ba; --accent-ink:#04201e; --sel:#18363a; --warn:#ffb36b; --warnbg:#3a2813;
+  --ok:#6fd48f; --okbg:#15301f; --bad:#ff8a80; --badbg:#3b1b19; --title:#222d35; --shadow:rgba(0,0,0,.5); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11171c; --surface:#1a2229; --ink:#e7edf2; --muted:#98a7b4; --line:#2a353e;
+  --accent:#41c3ba; --accent-ink:#04201e; --sel:#18363a; --warn:#ffb36b; --warnbg:#3a2813;
+  --ok:#6fd48f; --okbg:#15301f; --bad:#ff8a80; --badbg:#3b1b19; --title:#222d35; --shadow:rgba(0,0,0,.5); color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+a{color:var(--accent)}
+.wrap{max-width:1140px;margin:0 auto;padding-inline:16px}
+/* ---------- Kopf ---------- */
+.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;min-height:56px;flex-wrap:wrap;padding-block:6px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none;color:var(--ink)}
+.logo{width:30px;height:30px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:17px}
+.nav{display:flex;gap:2px;flex:1;flex-wrap:wrap}
+.nav a{padding:8px 12px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:15px}
+.nav a:hover{background:var(--sel)}
+.tools{display:flex;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;padding:7px 12px;cursor:pointer;font-size:14px;font-weight:700;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.ibtn{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:7px 11px;cursor:pointer;font-size:14px}
+/* ---------- Abschnitte ---------- */
+section{padding-block:44px;scroll-margin-top:60px}
+section+section{border-top:1px solid var(--line)}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 14px;letter-spacing:-.01em}
+h2{font-size:clamp(22px,3.2vw,30px);margin:0 0 6px;letter-spacing:-.01em}
+h3{font-size:18px;margin:0 0 6px}
+.lead{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:68ch;margin:0 0 20px}
+.sub{color:var(--muted);margin:0 0 22px;max-width:75ch}
+.hero{padding-block:48px 36px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px}
+.badge{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:14px}
+.badge b{color:var(--accent)}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:10px 16px;cursor:pointer;text-decoration:none;font-weight:600;font-size:15px}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.sm{padding:6px 11px;font-size:14px;border-radius:8px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.card .ic{font-size:24px;margin-bottom:6px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.note{border-left:4px solid var(--warn);background:var(--warnbg);padding:12px 16px;border-radius:0 10px 10px 0;margin:18px 0;font-size:15px}
+.note.ok{border-color:var(--ok);background:var(--okbg)}
+/* ---------- Demo-Leiste ---------- */
+.demos{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px;align-items:center}
+.demos .lbl{font-weight:700;font-size:14px;color:var(--muted);margin-right:4px}
+/* ---------- Fenster ---------- */
+.win{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);box-shadow:0 14px 40px var(--shadow)}
+.tb{background:var(--title);display:flex;align-items:center;justify-content:space-between;padding:7px 12px;font-size:13px;color:var(--muted)}
+.tb span:first-child{display:flex;gap:8px;align-items:center}
+.tb i{display:inline-block;width:14px;height:14px;border-radius:3px;background:var(--accent)}
+.ctl{letter-spacing:10px;font-size:12px}
+.app{display:grid;grid-template-columns:216px minmax(0,1fr);min-height:640px;font-size:var(--fs)}
+.side{background:var(--bg);border-right:1px solid var(--line);padding:12px 8px;display:flex;flex-direction:column;gap:3px}
+.side button{text-align:left;background:none;border:0;padding:10px 12px;border-radius:8px;cursor:pointer;display:flex;gap:10px;align-items:center;font-size:calc(var(--fs) - 2px)}
+.side button:hover{background:var(--sel)}
+.side button[aria-current="true"]{background:var(--accent);color:var(--accent-ink);font-weight:700}
+.side .sp{flex:1}
+.user{border-top:1px solid var(--line);padding:10px 8px 2px;font-size:13px;color:var(--muted);line-height:1.35}
+.user select{width:100%;margin-top:4px;padding:6px;border-radius:6px;border:1px solid var(--line);background:var(--surface)}
+.main{display:flex;flex-direction:column;min-width:0}
+.page{padding:20px 24px;flex:1;min-width:0}
+.page h2.pt{font-size:calc(var(--fs) + 9px);margin:0 0 4px}
+.muted{color:var(--muted)}
+.status{border-top:1px solid var(--line);background:var(--bg);padding:6px 14px;font-size:13px;color:var(--muted);min-height:30px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.fld{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);min-width:0}
+select.fld{min-width:220px}
+.chip{display:inline-block;background:var(--sel);color:var(--accent);border-radius:999px;padding:3px 11px;font-size:13px;font-weight:700}
+.b{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:calc(var(--fs) - 2px)}
+.b:hover{border-color:var(--accent)}
+.b.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+.b.ok{background:var(--okbg);color:var(--ok);border-color:var(--ok);font-weight:700}
+.b.bad{background:var(--badbg);color:var(--bad);border-color:var(--bad);font-weight:700}
+.b[disabled]{opacity:.5;cursor:not-allowed}
+.list{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.sent{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.sent.on{border-color:var(--accent);background:var(--sel)}
+.play{width:40px;height:40px;border-radius:50%;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer;font-size:15px}
+.sent .en{font-weight:700}
+.sent .pr{color:var(--muted);font-size:.85em}
+.sent .de{color:var(--muted)}
+.sent .ex{font-size:.88em;color:var(--muted);margin-top:3px;font-style:italic}
+.player{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap;margin-top:16px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.player label{font-size:13px;color:var(--muted);display:block}
+table.tab{border-collapse:collapse;width:100%;margin-top:14px;font-size:calc(var(--fs) - 2px)}
+.tab th,.tab td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+.tab th{font-size:13px;color:var(--muted);text-transform:none}
+.tab tr.hl td{background:var(--sel)}
+.tab tbody tr{cursor:default}
+.bar{height:12px;background:var(--line);border-radius:6px;overflow:hidden;min-width:120px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:6px;transition:width .5s}
+.qcard{margin:18px auto 0;max-width:620px;border:1px solid var(--line);border-radius:14px;padding:26px;text-align:center;background:var(--surface);box-shadow:0 4px 18px var(--shadow)}
+.qcard .dir{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.qcard .q{font-size:calc(var(--fs) + 7px);font-weight:700;margin:10px 0 14px;word-break:break-word}
+.qcard .a{font-size:calc(var(--fs) + 3px);color:var(--accent);min-height:1.6em;margin-bottom:12px;font-weight:700}
+.dots{display:flex;gap:5px;justify-content:center;margin:6px 0 14px}
+.dots i{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dots i.f{background:var(--accent)}
+.fb{padding:8px 12px;border-radius:8px;margin-top:10px;font-size:15px}
+.fb.ok{background:var(--okbg);color:var(--ok)}
+.fb.bad{background:var(--badbg);color:var(--bad)}
+.kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 6px;font-size:12px;background:var(--bg)}
+.log{margin-top:12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:13px/1.55 ui-monospace,Consolas,monospace;max-height:170px;overflow:auto;white-space:pre-wrap}
+.files{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.file{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--surface);font-size:15px;flex-wrap:wrap}
+.file .nm{flex:1;min-width:160px;font-family:ui-monospace,Consolas,monospace;font-size:14px}
+.chk{display:flex;gap:8px;align-items:center;padding:6px 8px;border-radius:6px}
+.chk:hover{background:var(--sel)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.tabs button{border:0;background:none;padding:8px 12px;cursor:pointer;border-bottom:3px solid transparent;font-size:15px}
+.tabs button[aria-selected="true"]{border-color:var(--accent);font-weight:700}
+.help h3{margin:18px 0 4px;font-size:calc(var(--fs) + 1px)}
+.help .card h3{margin-top:0}
+.help p,.help li{font-size:calc(var(--fs) - 2px)}
+.help ul{margin:4px 0 8px;padding-left:22px}
+.empty{border:2px dashed var(--line);border-radius:12px;padding:26px;text-align:center;color:var(--muted);margin-top:16px}
+mark{background:#ffe27a;color:#111;border-radius:3px;padding:0 2px}
+/* ---------- Modal ---------- */
+.ov{position:fixed;inset:0;background:rgba(10,18,26,.55);z-index:60;display:none;align-items:center;justify-content:center;padding:16px}
+.ov.on{display:flex}
+.dlg{background:var(--surface);border:1px solid var(--line);border-radius:14px;max-width:880px;width:100%;max-height:92vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.dlg header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-weight:700;position:sticky;top:0;background:var(--surface);z-index:2}
+.dlg .bd{padding:16px}
+.dlg footer{display:flex;gap:8px;justify-content:flex-end;padding:12px 16px;border-top:1px solid var(--line);position:sticky;bottom:0;background:var(--surface)}
+.steps{display:flex;gap:6px;margin-bottom:14px}
+.steps i{flex:1;height:5px;border-radius:3px;background:var(--line)}
+.steps i.on{background:var(--accent)}
+/* Datei-Dialog */
+.fdlg{border:1px solid var(--line);border-radius:8px;overflow:hidden;font-size:15px}
+.fdlg .path{background:var(--bg);padding:8px 12px;border-bottom:1px solid var(--line);font-family:ui-monospace,Consolas,monospace;font-size:13px}
+.fdlg .it{display:flex;gap:10px;padding:8px 12px;cursor:pointer;align-items:center}
+.fdlg .it:hover{background:var(--sel)}
+.fdlg .it[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+/* Excel-Gitter */
+.xl{border:1px solid var(--line);border-radius:6px;overflow:auto;background:#fff;color:#111;font:13px/1.35 Calibri,"Segoe UI",system-ui,sans-serif}
+.xl table{border-collapse:collapse;min-width:100%}
+.xl th{background:#e9ecef;color:#444;font-weight:400;border:1px solid #cfd4d9;padding:2px 8px;text-align:center;position:sticky;top:0}
+.xl th.rn{position:static;width:34px}
+.xl td{border:1px solid #dfe3e6;padding:3px 8px;white-space:nowrap}
+.xl td.h{background:#0b7a75;color:#fff;font-weight:700}
+.xl td.t{font-weight:700;font-size:15px}
+.xl td.g{background:#f2f4f5;color:#555}
+.xl .sheets{display:flex;gap:2px;background:#e9ecef;padding:4px 6px;border-top:1px solid #cfd4d9;position:sticky;left:0}
+.xl .sheets span{padding:3px 12px;border-radius:0 0 5px 5px;background:#d8dde1;color:#333;font-size:12px}
+.xl .sheets span.a{background:#fff;font-weight:700;color:#0b7a75;box-shadow:inset 0 -2px #0b7a75}
+/* PDF-Papier */
+.paper{background:#fff;color:#111;max-width:560px;margin:0 auto;padding:34px 38px;box-shadow:0 4px 24px rgba(0,0,0,.25);border:1px solid #ccc;font-family:Georgia,"Times New Roman",serif}
+.paper h4{font-size:22px;margin:0 0 2px;font-family:var(--font)}
+.paper .m{color:#666;font-size:12px;margin-bottom:14px;font-family:var(--font)}
+.paper table{width:100%;border-collapse:collapse;font-size:14px}
+.paper th{background:#0b7a75;color:#fff;text-align:left;padding:6px 8px;font-family:var(--font);font-size:12px}
+.paper td{padding:6px 8px;border-bottom:1px solid #ddd;vertical-align:top}
+.paper .ft{margin-top:18px;font-size:10px;color:#888;text-align:center;font-family:var(--font)}
+.dlbar{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--bg);margin-bottom:14px;font-size:14px}
+.dlbar .p{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.dlbar .p i{display:block;height:100%;width:0;background:var(--accent);transition:width 1.1s}
+/* Installer */
+.wiz{max-width:640px;margin:0 auto;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface);box-shadow:0 10px 30px var(--shadow)}
+.wiz .wt{background:var(--title);padding:7px 12px;font-size:13px;color:var(--muted)}
+.wiz .wb{padding:22px 24px;min-height:250px}
+.wiz .wb h3{font-size:20px}
+.wiz .wf{display:flex;justify-content:flex-end;gap:8px;padding:12px 16px;background:var(--bg);border-top:1px solid var(--line)}
+.lic{height:120px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:10px;font-size:13px;background:var(--bg);margin:10px 0}
+/* Lizenzen */
+.lic-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.lic-grid .card h3{margin-bottom:8px}
+.lic-grid ul{margin:0;padding-left:20px;font-size:15px}
+.lic-grid li{margin-bottom:5px}
+.pill{display:inline-block;border-radius:999px;padding:1px 9px;font-size:12px;font-weight:700;margin-left:4px;vertical-align:1px}
+.pill.g{background:var(--okbg);color:var(--ok)}
+.pill.w{background:var(--warnbg);color:var(--warn)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:10px;z-index:90;font-size:15px;opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.on{opacity:1}
+footer.pg{padding-block:30px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+@media (max-width:820px){
+  .app{grid-template-columns:1fr}
+  .side{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:6px}
+  .side button{white-space:nowrap}
+  .side .sp,.user{display:none}
+  .page{padding:16px}
+  .nav{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#top"><span class="logo" aria-hidden="true">E</span><span data-i="brand">Vokabeltrainer Englisch B1</span></a>
+  <nav class="nav" aria-label="Navigation">
+    <a href="#features" data-i="nav_feat">Funktionen</a>
+    <a href="#sim" data-i="nav_sim">Simulation</a>
+    <a href="#install" data-i="nav_inst">Installation</a>
+    <a href="#licenses" data-i="nav_lic">Lizenzen</a>
+  </nav>
+  <div class="tools">
+    <div class="seg" role="group" aria-label="Sprache / Language">
+      <button id="bde" aria-pressed="true" onclick="setLang('de')">DE</button>
+      <button id="ben" aria-pressed="false" onclick="setLang('en')">EN</button>
+    </div>
+    <button class="ibtn" id="thbtn" onclick="toggleTheme()" aria-label="Theme">◐</button>
+  </div>
+</div></header>
+<main id="top">
+<section class="hero"><div class="wrap" id="hero"></div></section>
+<section id="features"><div class="wrap" id="featc"></div></section>
+<section id="sim"><div class="wrap" id="simc"></div></section>
+<section id="install"><div class="wrap" id="instc"></div></section>
+<section id="licenses"><div class="wrap" id="licc"></div></section>
+</main>
+<footer class="pg"><div class="wrap" id="foot"></div></footer>
+<div class="ov" id="ov" role="dialog" aria-modal="true"><div class="dlg" id="dlg"></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+const L={de:{},en:{}};
+function add(k,de,en){L.de[k]=de;L.en[k]=en}
+add('brand','Vokabeltrainer Englisch B1','Vocabulary Trainer English B1');
+add('nav_feat','Funktionen','Features');add('nav_sim','Simulation','Simulation');add('nav_inst','Installation','Installation');add('nav_lic','Lizenzen','Licenses');
+add('hero_h1','Englisch lernen – langsam, deutlich, offline.','Learn English – slow, clear, offline.');
+add('hero_lead','Ein kostenloses Lernprogramm für Windows. Wörter und Sätze werden vorgelesen, mit Hörhilfe für hohe Töne. Karteikarten, eigene Kapitel, Excel-Import, MP3-Export. Alles bleibt auf deinem Rechner.','A free learning program for Windows. Words and sentences are read aloud, with a hearing aid mode that boosts high tones. Flashcards, your own chapters, Excel import, MP3 export. Everything stays on your computer.');
+add('b_off','Ohne Internet','No internet needed');add('b_priv','Nur privat, nicht-kommerziell','Private, non-commercial use only');add('b_adm','Ohne Administratorrechte','No admin rights');add('b_win','Windows 10/11, 64 Bit','Windows 10/11, 64-bit');add('b_free','Kostenlos, ohne Anmeldung','Free, no sign-up');
+add('btn_dl','⬇ Setup herunterladen (GitHub Releases)','⬇ Download setup (GitHub Releases)');add('btn_try','▶ Simulation ausprobieren','▶ Try the simulation');add('btn_lic','Lizenzen & Hinweise','Licenses & notices');
+add('hero_note','<b>Wichtig:</b> Diese Seite ist eine <b>Simulation</b>. Sie zeichnet die Oberfläche nach. Alle Beispiele sind frei erfunden, es sind keine Kursinhalte enthalten. Das echte Programm ist auf Deutsch, die englische Ansicht hier dient nur zur Erklärung.','<b>Please note:</b> This page is a <b>simulation</b>. It redraws the user interface. All examples are invented; no course material is included. The real program is in German; the English view here is for explanation only.');
+add('feat_h','Was kann das Programm?','What can it do?');
+add('feat_sub','Acht Bereiche, in einem Ordner, ohne Internet. Klicke unten auf „Simulation“, um jeden Bereich selbst auszuprobieren.','Eight areas in a single folder, no internet needed. Open “Simulation” below to try each area yourself.');
+const F=[
+['🔊','Vorlesen','Listen','Wörter und Sätze werden vorgelesen. Tempo 0,6 bis 1,2, Hörhilfe hebt hohe Töne an, zwei englische Stimmen sind möglich.','Words and sentences are read aloud. Tempo 0.6 to 1.2; the hearing aid mode boosts high tones.'],
+['❓','Abfrage','Quiz','Karteikarten in drei Richtungen: Englisch→Deutsch, Deutsch→Englisch, Hören→Schreiben. Wiederholung nach 1, 3, 7 und 14 Tagen.','Flashcards in three directions: English→German, German→English, Listen→Write. Repetition after 1, 3, 7 and 14 days.'],
+['✏️','Eigene Kapitel','Your own chapters','Kapitel anlegen, Einträge eingeben, Bilder und Screenshots einfügen (Datei oder Strg+V), doppelte Sätze werden gemeldet.','Create chapters, enter items, add pictures and screenshots (file or Ctrl+V); duplicates are reported.'],
+['📥','Excel-Import','Excel import','Mit der mitgelieferten Vorlage lädst du ganze Kapitel aus Excel ein: Englisch, Deutsch, Aussprache, Beispielsatz.','Load whole chapters from Excel with the included template: English, German, pronunciation, example sentence.'],
+['📤','Export','Export','Jedes Kapitel als PDF, Excel, TXT oder MP3. Praktisch zum Drucken oder zum Lernen unterwegs.','Export any chapter as PDF, Excel, TXT or MP3. Handy for printing or learning on the go.'],
+['🎧','MP3 mit Übersetzung','MP3 with translation','Deutsch, Pause, Englisch, Pause: eine MP3 je Kapitel, dazu eine Excel-Datei mit denselben Zeilen. Pausen einstellbar.','German, pause, English, pause: one MP3 per chapter plus an Excel file with the same rows. Pauses adjustable.'],
+['🔎','Suchen','Search','Deutsch und Englisch finden. Umlaute sind egal: „apfel“ findet „Äpfel“. Optional ganzes Wort und Beispielsätze.','Find German and English. Umlauts don’t matter: “apfel” finds “Äpfel”. Optional whole word and example sentences.'],
+['📊','Fortschritt','Progress','Fortschritt je Kapitel in Prozent, Lernserie in Tagen, mehrere Benutzer, Sicherung mit Datum, Schriftgröße, hell/dunkel.','Progress per chapter in percent, daily streak, several users, dated backups, font size, light/dark.']
+];
+add('hear_h','Gebaut für Menschen mit Hörverlust','Built for people with hearing loss');
+add('hear_p','Das Programm entstand für jemanden mit Hochtonverlust: langsame, deutliche Sprache, eine tiefere Stimme, angehobene Höhen, große Schrift und klare Kontraste. Es kann jeder nutzen, der in Ruhe Englisch lernen will.','The program was made for someone with high-frequency hearing loss: slow, clear speech, a lower voice, boosted highs, large type and strong contrast. Anyone who wants to learn English at their own pace can use it.');
+add('sim_h','Simulation: so sieht das Programm aus','Simulation: what the program looks like');
+add('sim_sub','Das Fenster unten verhält sich wie das echte Programm. Die Sprache kommt von der Stimme deines Browsers (nicht von den Original-Stimmen).','The window below behaves like the real program. Speech comes from your browser’s voice (not the original voices).');
+add('demo_l','Geführte Demos:','Guided demos:');
+add('d_excel','📥 Excel hochladen','📥 Upload Excel');add('d_pdf','📄 PDF herunterladen','📄 Download PDF');add('d_xls','📊 Excel exportieren','📊 Export Excel');add('d_mp3','🎧 MP3 erstellen','🎧 Create MP3');add('d_quiz','❓ Abfrage','❓ Quiz');
+add('m_listen','🔊  Vorlesen','🔊  Listen');add('m_quiz','❓  Abfrage','❓  Quiz');add('m_chap','✏️  Kapitel','✏️  Chapters');add('m_mp3','🎧  MP3 erstellen','🎧  Create MP3');add('m_sd','📚  Sprachduschen','📚  Extra area');add('m_search','🔎  Suchen','🔎  Search');add('m_prog','📊  Fortschritt','📊  Progress');add('m_set','⚙️  Einstellungen','⚙️  Settings');add('m_help','📖  Hilfe','📖  Help');add('m_info','ℹ️  Info & Lizenzen','ℹ️  Info & Licenses');
+add('signed','Angemeldet als','Signed in as');add('shared','Der Lernstand wird von allen gemeinsam genutzt.','The learning progress is shared by all users.');
+add('status0','Bereit. Stimme: Browser-Stimme (Simulation).','Ready. Voice: browser voice (simulation).');
+add('chapter','Kapitel','Chapter');add('items','Einträge','items');
+add('l_title','Vorlesen','Listen');add('l_sub','Wähle ein Kapitel. Jede Zeile ist ein Wort oder Satz mit deutscher Übersetzung.','Pick a chapter. Each line is a word or sentence with a German translation.');
+add('playall','▶ Alle vorlesen','▶ Read all');add('stop','■ Stopp','■ Stop');add('tempo','Tempo','Tempo');add('voice','Stimme','Voice');add('voiceval','Ryan – männlich, tief','Ryan – male, deep');add('hoer','Hörhilfe (Höhen anheben)','Hearing aid (boost highs)');
+add('hoer_note','In der Simulation nur als Schalter. Im Programm wird der Klang tatsächlich verändert.','Switch only in the simulation. In the real program the sound is actually changed.');
+add('noaudio','Dein Browser hat keine Sprachausgabe.','Your browser has no speech output.');
+add('q_title','Abfrage','Quiz');add('q_sub','Karteikarten. Das Programm merkt sich, was du kannst, und fragt zur richtigen Zeit wieder.','Flashcards. The program remembers what you know and asks again at the right time.');
+add('dir_ed','Englisch → Deutsch','English → German');add('dir_de','Deutsch → Englisch','German → English');add('dir_ho','Hören → Schreiben','Listen → Write');
+add('q_reveal','Antwort zeigen','Show answer');add('q_know','✔ Gewusst','✔ Knew it');add('q_dont','✘ Nicht gewusst','✘ Didn’t know');add('q_check','Prüfen','Check');add('q_type','Englisches Wort eintippen …','Type the English word …');add('q_hear','🔊 Nochmal anhören','🔊 Play again');
+add('q_next','Nächste Wiederholung in','Next repetition in');add('day1','1 Tag','1 day');add('days3','3 Tagen','3 days');add('days7','7 Tagen','7 days');add('days14','14 Tagen','14 days');
+add('q_done_h','Geschafft!','Done!');add('q_done_p','Alle Karten dieser Runde sind beantwortet.','All cards of this round are answered.');add('q_again','Noch einmal','Again');add('q_hint','Tasten: Enter zeigt die Antwort, J = gewusst, N = nicht gewusst.','Keys: Enter shows the answer, J = knew it, N = didn’t know.');
+add('q_ok','Richtig!','Correct!');add('q_bad','Leider falsch. Richtig ist:','Not quite. The answer is:');add('stage','Stufe','Stage');add('card','Karte','Card');
+add('c_title','Kapitel','Chapters');add('c_sub','Doppelklick öffnet ein Kapitel im Bereich Vorlesen.','Double-click opens a chapter in Listen.');
+add('c_new','＋ Neues Kapitel','＋ New chapter');add('c_xl','📥 Kapitel aus Excel …','📥 Chapter from Excel …');add('c_exp','Exportieren:','Export:');add('c_add','Eintrag hinzufügen','Add item');add('c_en','Englisch','English');add('c_de','Deutsch','German');add('c_pr','Aussprache','Pronunciation');add('c_ex','Beispielsatz','Example sentence');add('c_cnt','Anzahl','Count');add('c_name','Kapitel','Chapter');
+add('c_added','Eintrag hinzugefügt.','Item added.');add('c_dup','Doppelt: Dieser Satz steht schon im Kapitel.','Duplicate: this sentence is already in the chapter.');add('c_need','Bitte Englisch und Deutsch ausfüllen.','Please fill in English and German.');add('c_prompt','Titel des neuen Kapitels:','Title of the new chapter:');
+add('x_title','Kapitel aus Excel einlesen','Import a chapter from Excel');
+add('x1','1. Datei wählen','1. Choose file');add('x2','2. Vorschau','2. Preview');add('x3','3. Ergebnis','3. Result');
+add('x1_p','Wähle die ausgefüllte Vorlage. Sie liegt im Programmordner unter <b>daten</b>.','Choose the filled-in template. It is in the program folder under <b>daten</b>.');
+add('x_open','Öffnen','Open');add('x_cancel','Abbrechen','Cancel');add('x_next','Weiter','Next');add('x_back','Zurück','Back');add('x_imp','Jetzt importieren','Import now');add('x_close','Schließen','Close');
+add('x_name','Dateiname:','File name:');add('x_pick','Bitte erst eine Datei anklicken.','Please click a file first.');
+add('x2_p','So sieht die Datei in Excel aus. Titel in <b>B1</b> (Pflicht), Einträge ab <b>Zeile 5</b>: links Englisch, daneben Deutsch. Aussprache und Beispielsatz sind freiwillig.','This is how the file looks in Excel. Title in <b>B1</b> (required), items from <b>row 5</b>: English on the left, German next to it. Pronunciation and example are optional.');
+add('x_title_lbl','Kapitel-Titel:','Chapter title:');add('x_about','Worum geht es (freiwillig):','What is it about (optional):');add('x_req','Englisch (Pflicht)','English (required)');add('x_reqd','Deutsch (Pflicht)','German (required)');add('x_opt1','Aussprache (freiwillig)','Pronunciation (optional)');add('x_opt2','Beispielsatz Englisch (freiwillig)','Example, English (optional)');add('x_opt3','Beispielsatz Deutsch (freiwillig)','Example, German (optional)');
+add('t_guide','Anleitung','Guide');add('t_ex','Beispiel','Example');add('t_k1','Kapitel 1','Chapter 1');
+add('guide1','So geht es:','How it works:');add('guide2','1. Blatt „Kapitel 1“ öffnen. Oben in B1 den Titel eintragen (Pflicht).','1. Open the sheet “Chapter 1”. Enter the title in B1 (required).');add('guide3','2. Ab Zeile 5: links Englisch, daneben Deutsch.','2. From row 5: English on the left, German next to it.');add('guide4','3. Eine Zeile = ein Wort oder ein Satz. Bis zu 200 Zeilen pro Blatt.','3. One row = one word or sentence. Up to 200 rows per sheet.');add('guide5','4. Datei speichern. Im Programm: Kapitel > Kapitel aus Excel.','4. Save the file. In the program: Chapters > Chapter from Excel.');
+add('x3_ok','Import fertig','Import finished');add('x3_p','Neues Kapitel angelegt:','New chapter created:');add('x3_n','Einträge übernommen, doppelte übersprungen:','items imported, duplicates skipped:');add('x3_go','Kapitel öffnen','Open chapter');
+add('f_pdf','PDF-Vorschau','PDF preview');add('f_xls','Excel-Vorschau','Excel preview');add('f_txt','TXT-Vorschau','TXT preview');
+add('dl_saving','Wird gespeichert …','Saving …');add('dl_done','Gespeichert in den Ordner „export“.','Saved to the “export” folder.');add('dl_open','Datei öffnen','Open file');
+add('pdf_h','Kapitel','Chapter');add('pdf_foot','Erstellt mit dem Vokabeltrainer Englisch B1 · nur für private Nutzung','Created with Vocabulary Trainer English B1 · private use only');
+add('m_title','MP3 erstellen','Create MP3');add('m_sub','Je Kapitel entsteht eine MP3 mit Übersetzung und eine Excel-Datei mit denselben Zeilen. Ordner: export_MP3','One MP3 with translation and one Excel file with the same rows are created per chapter. Folder: export_MP3');
+add('m_order','Reihenfolge','Order');add('m_o1','Deutsch, dann Englisch','German, then English');add('m_o2','Englisch, dann Deutsch','English, then German');add('m_p1','Pause nach der ersten Sprache (s)','Pause after first language (s)');add('m_p2','Pause nach jedem Paar (s)','Pause after each pair (s)');
+add('m_all','Alle auswählen','Select all');add('m_none','Keine','None');add('m_go','MP3 und Excel erstellen','Create MP3 and Excel');add('m_stop','Abbrechen','Cancel');add('m_pick','Bitte mindestens ein Kapitel anhaken.','Please tick at least one chapter.');
+add('m_rule','Dateiname: Nummer + Kapitelname, höchstens 25 Zeichen, z. B. „0001 Im Café.mp3“','File name: number + chapter name, max. 25 characters, e.g. “0001 At the café.mp3”');
+add('m_done','Fertig. Dateien im Ordner export_MP3:','Done. Files in the export_MP3 folder:');add('m_play','▶ Hörprobe','▶ Sample');add('m_view','Excel ansehen','View Excel');
+add('m_run','Erzeuge','Creating');add('m_ready','Fertig:','Done:');
+add('s_title','Suchen','Search');add('s_sub','Deutsche und englische Wörter finden.','Find German and English words.');add('s_ph','Suchwort …','Search word …');add('s_lang','Sprache','Language');add('s_both','Englisch und Deutsch','English and German');add('s_en','Nur Englisch','English only');add('s_de','Nur Deutsch','German only');add('s_whole','Ganzes Wort','Whole word');add('s_ex','Auch in Beispielsätzen','Also in example sentences');add('s_none','Nichts gefunden.','Nothing found.');add('s_where','Wo steht es','Where');add('s_hits','Treffer','hits');add('s_tip','Probiere: „kaffee“, „fahrkarte“, „Rechnung“, „ticket“.','Try: “kaffee”, “fahrkarte”, “Rechnung”, “ticket”.');
+add('p_title','Fortschritt','Progress');add('p_sub','Wie viele Karten du schon kannst. Gerechnet über alle drei Richtungen.','How many cards you already know, across all three directions.');add('p_streak','Lernserie','Streak');add('p_days','Tage hintereinander','days in a row');add('p_cards','Karten gekonnt','cards mastered');add('p_leg','Fortschritt = Summe der Stufen ÷ (4 × Karten). Stufen 0 bis 4, Wiederholung nach 1, 3, 7, 14 Tagen.','Progress = sum of stages ÷ (4 × cards). Stages 0–4, repetition after 1, 3, 7, 14 days.');
+add('t_title','Einstellungen','Settings');add('t_fs','Schriftgröße','Font size');add('t_th','Darstellung','Appearance');add('t_auto','Automatisch','Automatic');add('t_light','Hell','Light');add('t_dark','Dunkel','Dark');add('t_bk','💾 Sicherung mit Datum','💾 Backup with date');add('t_imp','📥 Excel importieren …','📥 Import Excel …');add('t_bkdone','Sicherung angelegt: sicherung\\vokabeln_2026-10-15.db','Backup created: sicherung\\vokabeln_2026-10-15.db');add('t_users','Benutzer (der Lernstand ist für alle gemeinsam)','Users (progress is shared by all)');add('t_db','Datenbank: C:\\Vokabeltrainer\\vokabeln.db (lokal, leer beim ersten Start)','Database: C:\\Vokabeltrainer\\vokabeln.db (local, empty on first start)');
+add('sd_title','Zusatzbereich „Sprachduschen“','Extra area “Sprachduschen”');add('sd_p','Dieser Bereich ist für Lernbücher, die du selbst besitzt und nutzen darfst. Er hat eigenen Lernstand und eigenen Fortschritt. In der öffentlichen Version ist er leer.','This area is for study books you own and may use. It has its own progress. In the public version it is empty.');add('sd_e','Noch keine Daten eingelesen.','No data loaded yet.');
+add('h_title','Hilfe','Help');
+add('i_title','Info & Lizenzen','Info & Licenses');
+add('inst_h','Installation Schritt für Schritt','Installation step by step');add('inst_sub','So sieht das Setup aus. Probiere es aus – es installiert nichts, es ist nur eine Simulation.','This is what the setup looks like. Try it – it installs nothing; it is only a simulation.');
+add('w_title','Setup – Vokabeltrainer Englisch B1','Setup – Vocabulary Trainer English B1');add('w_next','Weiter >','Next >');add('w_back','< Zurück','< Back');add('w_cancel','Abbrechen','Cancel');add('w_inst','Installieren','Install');add('w_fin','Fertigstellen','Finish');
+add('w1','Willkommen','Welcome');add('w1p','Dieser Assistent installiert den Vokabeltrainer Englisch B1 auf deinem Computer. Es sind keine Administratorrechte nötig. Die Datenbank ist am Anfang leer.','This wizard installs Vocabulary Trainer English B1 on your computer. No administrator rights are needed. The database is empty at first.');
+add('w2','Lizenzvereinbarung','License agreement');add('w2acc','Ich akzeptiere die Vereinbarung','I accept the agreement');
+add('w3','Zielordner wählen','Choose destination folder');add('w3p','Wohin soll das Programm installiert werden? Vorgeschlagen ist C:\\Vokabeltrainer. D:\\Vokabeltrainer ist ebenfalls möglich.','Where should the program be installed? C:\\Vokabeltrainer is suggested. D:\\Vokabeltrainer is also possible.');
+add('w4','Zusätzliche Symbole','Additional icons');add('w4c','Symbol auf dem Desktop anlegen','Create a desktop icon');add('w4p','Das Startmenü-Symbol wird immer angelegt.','The Start menu icon is always created.');
+add('w5','Installiere …','Installing …');add('w6','Die Installation ist fertig','Installation complete');add('w6p','Beim ersten Start ist die Datenbank leer. Die Excel-Vorlage liegt im Unterordner daten (Kapitel_Vorlage.xlsx). Die Bedienungsanleitung findest du im Programm unter Hilfe und im Startmenü.','On first start the database is empty. The Excel template is in the sub-folder daten (Kapitel_Vorlage.xlsx). The manual is under Help in the program and in the Start menu.');add('w6s','Vokabeltrainer jetzt starten','Start Vocabulary Trainer now');
+add('inst_files','Was installiert wird','What is installed');add('inst_f1','Programm (EXE) mit Stimmen Ryan (EN) und Thorsten (DE)','Program (EXE) with voices Ryan (EN) and Thorsten (DE)');add('inst_f2','Leere Datenbank wird beim ersten Start angelegt','Empty database is created on first start');add('inst_f3','Excel-Vorlage daten\\Kapitel_Vorlage.xlsx','Excel template daten\\Kapitel_Vorlage.xlsx');add('inst_f4','Bedienungsanleitung (Word) und Hilfe im Programm','Manual (Word) and in-program help');add('inst_f5','Lizenzhinweise LIZENZEN.txt','License notice LIZENZEN.txt');
+add('inst_warn','Windows meldet beim ersten Start eventuell „Der Computer wurde durch Windows geschützt“, weil das Programm nicht signiert ist. Dann „Weitere Informationen“ und „Trotzdem ausführen“ wählen.','On first start Windows may show “Windows protected your PC” because the program is not signed. Choose “More info” and then “Run anyway”.');
+add('lic_h','Nutzung, Lizenzen und Hinweise','Use, licenses and notices');add('lic_sub','Dieselben Informationen stehen im Programm unter „Info & Lizenzen“ und in der Datei LIZENZEN.txt.','The same information is in the program under “Info & Licenses” and in the file LIZENZEN.txt.');
+add('foot1','Simulation des Vokabeltrainers Englisch B1. Nur für private, nicht-kommerzielle Nutzung. Keine Garantie. Kein Rechtsrat.','Simulation of Vocabulary Trainer English B1. For private, non-commercial use only. No warranty. Not legal advice.');
+add('foot2','Seite und Programmcode: CC BY-NC-SA 4.0. Alle Beispielwörter sind frei erfunden.','Page and program code: CC BY-NC-SA 4.0. All sample words are invented.');
+add('toast_lang','Sprache gewechselt','Language switched');
+/* ----- Hilfe ----- */
+const HELP={de:[
+['Start','Links im Menü wählst du den Bereich. Unten links steht, wer angemeldet ist. Der Lernstand ist für alle Benutzer gemeinsam.'],
+['Vorlesen','Kapitel wählen, Pfeil neben einer Zeile drücken. „Alle vorlesen“ liest das ganze Kapitel. Das Tempo reicht von 0,6 bis 1,2, langsamer ist meist besser. Die Hörhilfe hebt hohe Töne an – bei Hochtonverlust an lassen.'],
+['Abfrage','Drei Richtungen: Englisch→Deutsch, Deutsch→Englisch, Hören→Schreiben. Enter zeigt die Antwort, J = gewusst, N = nicht gewusst. Gewusste Karten kommen nach 1, 3, 7 und 14 Tagen wieder.'],
+['Eigene Kapitel','Neues Kapitel anlegen, Einträge eintippen, Bilder per Datei oder Strg+V einfügen. Doppelte Sätze werden gemeldet. Export als MP3, PDF, Excel oder TXT.'],
+['Kapitel aus Excel','daten\\Kapitel_Vorlage.xlsx ausfüllen (Titel in B1, Einträge ab Zeile 5), speichern, dann Kapitel › „Kapitel aus Excel“ wählen.'],
+['MP3 erstellen','Kapitel anhaken, Reihenfolge und Pausen wählen, „MP3 und Excel erstellen“. Die Dateien liegen im Ordner export_MP3.'],
+['Suchen','Deutsch oder Englisch tippen. Umlaute sind egal. Optional „Ganzes Wort“ und „Auch in Beispielsätzen“.'],
+['Installation','Vokabeltrainer_Setup.exe starten. Keine Administratorrechte nötig. Vorschlag: C:\\Vokabeltrainer, möglich ist auch D:\\Vokabeltrainer.'],
+['Nur privat','Das Programm ist nur für private, nicht-kommerzielle Nutzung. Mehr dazu unter „Info & Lizenzen“.']],
+en:[
+['Start','Pick an area in the menu on the left. The bottom left shows who is signed in. Progress is shared by all users.'],
+['Listen','Pick a chapter and press the arrow next to a line. “Read all” reads the whole chapter. Tempo ranges from 0.6 to 1.2; slower is usually better. The hearing aid mode boosts high tones – keep it on for high-frequency loss.'],
+['Quiz','Three directions: English→German, German→English, Listen→Write. Enter shows the answer, J = knew it, N = didn’t. Known cards return after 1, 3, 7 and 14 days.'],
+['Your own chapters','Create a chapter, type items, add pictures by file or Ctrl+V. Duplicates are reported. Export as MP3, PDF, Excel or TXT.'],
+['Chapter from Excel','Fill in daten\\Kapitel_Vorlage.xlsx (title in B1, items from row 5), save, then choose Chapters › “Chapter from Excel”.'],
+['Create MP3','Tick chapters, choose order and pauses, “Create MP3 and Excel”. The files are in the folder export_MP3.'],
+['Search','Type German or English. Umlauts don’t matter. Optional “Whole word” and “Also in example sentences”.'],
+['Installation','Run Vokabeltrainer_Setup.exe. No administrator rights needed. Suggested: C:\\Vokabeltrainer; D:\\Vokabeltrainer is also possible.'],
+['Private use only','The program is for private, non-commercial use only. See “Info & Licenses”.']]};
+/* ----- Lizenzen ----- */
+const LIC={de:[
+['🔒 Nur für private Zwecke',['Nur private, nicht-kommerzielle Nutzung. Erlaubt: privat lernen, kostenlos weitergeben.','Nicht erlaubt: Verkauf, Nutzung in Firmen oder Schulen mit Gewinnabsicht, Einbau in bezahlte Produkte.','Grund: Die englische Stimme (Ryan) steht unter einer Lizenz nur für nicht-kommerzielle Nutzung.','Keine Garantie. Nutzung auf eigene Verantwortung. Mache regelmäßig eine Sicherung.']],
+['🛡 Datenschutz',['Das Programm arbeitet vollständig offline und sendet keine Daten ins Internet.','Keine Anmeldung, keine Werbung.','Alle Daten (Datenbank, Lernstand, Bilder) liegen nur in deinem Programmordner.']],
+['📁 Installation und Speicherort',['Setup ohne Administratorrechte.','Vorschlag: C:\\Vokabeltrainer. Möglich: D:\\Vokabeltrainer oder ein anderer Ordner.','Beim ersten Start ist die Datenbank leer. Excel-Vorlage: daten\\Kapitel_Vorlage.xlsx.']],
+['🧰 Verwendete Werkzeuge',['Python <span class="pill g">PSF</span>','PySide6 / Qt <span class="pill g">LGPL-3.0</span> – unverändert als Bibliothek, austauschbar','SQLite <span class="pill g">gemeinfrei</span>','sherpa-onnx <span class="pill g">Apache-2.0</span> – Sprachausgabe offline','Piper-Stimmformat <span class="pill g">MIT</span>','lameenc / LAME <span class="pill g">LGPL-3.0</span> – MP3-Dateien','openpyxl, python-docx <span class="pill g">MIT</span>','numpy <span class="pill g">BSD-3</span>, reportlab <span class="pill g">BSD</span>','PyInstaller <span class="pill g">GPL mit Ausnahme</span> – packt die EXE','Inno Setup – erzeugt nur das Setup, steckt nicht im Programm']],
+['🗣 Stimmen',['Englisch: en_US-ryan-medium, Daten RyanSpeech <span class="pill w">CC BY-NC-SA 4.0</span> – nur nicht-kommerziell, mit Namensnennung, Weitergabe unter gleichen Bedingungen.','Deutsch: de_DE-thorsten-medium, Thorsten-Voice <span class="pill g">CC0</span> – frei nutzbar.','Erzeugte MP3-Dateien enthalten diese Stimmen: nicht kommerziell weitergeben, Quelle nennen.']],
+['📚 Deine eigenen Inhalte',['Das Programm enthält keine Kursinhalte, Lehrbücher oder Wortlisten.','Lege nur Inhalte ein, die du selbst nutzen darfst. Gekaufte Bücher und Kursunterlagen nicht weitergeben – auch nicht als Export oder MP3.']],
+['🤖 Entstehung',['Entwickelt im Dialog mit der KI Claude (Anthropic), in kleinen Schritten mit automatischen Tests.','Privates Hobby-Projekt für den eigenen Englischkurs.']],
+['⚖ Hinweis',['Information, keine Rechtsberatung. Bei Fragen zu Lizenzen die Originaltexte der Projekte lesen.']]],
+en:[
+['🔒 Private use only',['Private, non-commercial use only. Allowed: learning privately, passing it on free of charge.','Not allowed: selling it, use in companies or schools for profit, building it into paid products.','Reason: the English voice (Ryan) is licensed for non-commercial use only.','No warranty. Use at your own risk. Make regular backups.']],
+['🛡 Privacy',['The program works completely offline and sends no data to the internet.','No sign-up, no ads.','All data (database, progress, pictures) stays in your program folder.']],
+['📁 Installation and location',['Setup without administrator rights.','Suggested: C:\\Vokabeltrainer. Possible: D:\\Vokabeltrainer or any other folder.','On first start the database is empty. Excel template: daten\\Kapitel_Vorlage.xlsx.']],
+['🧰 Tools used',['Python <span class="pill g">PSF</span>','PySide6 / Qt <span class="pill g">LGPL-3.0</span> – used unmodified as a library, replaceable','SQLite <span class="pill g">public domain</span>','sherpa-onnx <span class="pill g">Apache-2.0</span> – offline speech','Piper voice format <span class="pill g">MIT</span>','lameenc / LAME <span class="pill g">LGPL-3.0</span> – MP3 files','openpyxl, python-docx <span class="pill g">MIT</span>','numpy <span class="pill g">BSD-3</span>, reportlab <span class="pill g">BSD</span>','PyInstaller <span class="pill g">GPL with exception</span> – packs the EXE','Inno Setup – only builds the setup, not part of the program']],
+['🗣 Voices',['English: en_US-ryan-medium, data RyanSpeech <span class="pill w">CC BY-NC-SA 4.0</span> – non-commercial only, attribution required, share-alike.','German: de_DE-thorsten-medium, Thorsten-Voice <span class="pill g">CC0</span> – free to use.','Generated MP3 files contain these voices: do not share commercially, credit the source.']],
+['📚 Your own content',['The program contains no course material, textbooks or word lists.','Only enter content you may use yourself. Do not pass on content from purchased books or courses – including exports or MP3s.']],
+['🤖 How it was made',['Developed in dialogue with the AI Claude (Anthropic), in small steps with automated tests.','A private hobby project for the author’s own English course.']],
+['⚖ Notice',['Information only, not legal advice. For license questions read the original texts of the projects.']]]};
+/* ----- Beispieldaten (frei erfunden) ----- */
+const CH0=[
+{t:{de:'Im Café',en:'At the café'},items:[
+['coffee','der Kaffee','/ˈkɒfi/','I would like a coffee, please.','Ich hätte gern einen Kaffee.'],
+['Could I have the menu, please?','Könnte ich bitte die Speisekarte haben?'],
+['I would like a tea with milk.','Ich möchte einen Tee mit Milch.'],
+['the bill','die Rechnung','/ðə bɪl/'],
+['Is this seat free?','Ist dieser Platz frei?'],
+['to order','bestellen'],
+['Do you take credit cards?','Nehmen Sie Kreditkarten?']]},
+{t:{de:'Auf Reisen',en:'Travelling'},items:[
+['the ticket','die Fahrkarte','/ðə ˈtɪkɪt/'],
+['Where does the train to Berlin leave from?','Von wo fährt der Zug nach Berlin ab?'],
+['the platform','der Bahnsteig'],
+['delayed','verspätet'],
+['luggage','das Gepäck','/ˈlʌɡɪdʒ/'],
+['I have a reservation.','Ich habe eine Reservierung.']]},
+{t:{de:'Im Büro',en:'At the office'},items:[
+['the meeting','die Besprechung'],
+['Could you send me the report by Friday?','Könnten Sie mir den Bericht bis Freitag schicken?'],
+['deadline','die Frist','/ˈdedlaɪn/'],
+['to attend','teilnehmen'],
+["I'm afraid I can't make it.",'Leider kann ich nicht kommen.'],
+['schedule','der Terminplan']]}];
+const XLCH={t:{de:'Einkaufen',en:'Shopping'},about:{de:'Im Laden und an der Kasse',en:'In the shop and at the till'},items:[
+['How much is this?','Wie viel kostet das?'],['the receipt','der Kassenbon'],['cheaper','billiger'],
+['Can I pay by card?','Kann ich mit Karte zahlen?'],['a size smaller','eine Größe kleiner'],['to try on','anprobieren']]};
+/* ===== Hilfsfunktionen ===== */
+let lang='de';
+try{const s=localStorage.getItem('vt_lang');if(s)lang=s;else if(!(navigator.language||'de').toLowerCase().startsWith('de'))lang='en'}catch(e){}
+const T=k=>(L[lang][k]??L.de[k]??k);
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ß/g,'ss');
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2600)}
+function item(a){return a.length>=5?{en:a[0],de:a[1],pr:a[2],xe:a[3],xd:a[4]}:a.length==3?{en:a[0],de:a[1],pr:a[2]}:{en:a[0],de:a[1]}}
+XLCH.items=XLCH.items.map(a=>item(a));
+const S={page:'listen',cur:0,sel:0,tempo:0.9,hoer:true,fs:17,playing:-1,run:false,
+  chs:CH0.map(c=>({t:c.t,items:c.items.map(item)})),st:{},streak:5,today:false,
+  q:{dir:'ed',ch:0,i:0,shown:false,fb:null,done:false,right:0},
+  mp3:{sel:[true,true,true],order:'de',p1:1.5,p2:3.0,res:null,log:'',busy:false},
+  sr:{q:'',lang:'both',whole:false,ex:false},xl:{step:1,pick:false,sheet:'k1',done:false},
+  w:{step:1,acc:false,dir:'C:\\Vokabeltrainer',desk:true,pct:0}};
+function cname(c){return c.t[lang]}
+function stKey(ci,ii,d){return ci+':'+ii+':'+d}
+function getSt(ci,ii,d){return S.st[stKey(ci,ii,d)]||0}
+// Beispiel-Fortschritt, damit die Balken nicht leer sind
+[[0,0,'ed',4],[0,1,'ed',3],[0,2,'ed',3],[0,3,'ed',2],[0,0,'de',2],[0,1,'de',1],[0,2,'ho',1],[1,0,'ed',3],[1,1,'ed',2],[1,2,'ed',1]].forEach(a=>S.st[stKey(a[0],a[1],a[2])]=a[3]);
+/* ===== Sprache ===== */
+let voices=[];function loadV(){try{voices=speechSynthesis.getVoices()}catch(e){}}
+if('speechSynthesis' in window){loadV();speechSynthesis.onvoiceschanged=loadV}
+function speak(text,l,done){
+  if(!('speechSynthesis' in window)){toast(T('noaudio'));done&&done();return}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);const code=l=='de'?'de-DE':'en-US';u.lang=code;
+  const v=voices.find(v=>v.lang==code)||voices.find(v=>v.lang.startsWith(l));if(v)u.voice=v;
+  u.rate=Math.max(.5,Math.min(1.4,S.tempo));
+  let fin=false;const end=()=>{if(!fin){fin=true;done&&done()}};
+  u.onend=end;u.onerror=end;speechSynthesis.speak(u);
+  setTimeout(end,Math.max(2500,text.length*130/Math.max(.5,S.tempo))+1500);
+}
+function stopSpeak(){S.run=false;S.playing=-1;try{speechSynthesis.cancel()}catch(e){}mark();}
+function mark(){document.querySelectorAll('.sent').forEach((e,i)=>e.classList.toggle('on',i==S.playing))}
+/* ===== Kopf, Hero, Funktionen ===== */
+function setLang(l){lang=l;try{localStorage.setItem('vt_lang',l)}catch(e){}stopSpeak();document.documentElement.lang=l;renderAll();}
+function toggleTheme(){const r=document.documentElement;const dark=getComputedStyle(r).getPropertyValue('--bg').trim()=='#11171c';r.dataset.theme=dark?'light':'dark';try{localStorage.setItem('vt_theme',r.dataset.theme)}catch(e){}}
+try{const th=localStorage.getItem('vt_theme');if(th)document.documentElement.dataset.theme=th}catch(e){}
+const REL='https://github.com/VarVergErgos/Vokabeltrainer_Englisch/releases/latest';
+function renderHero(){$('#hero').innerHTML=`<h1>${T('hero_h1')}</h1><p class="lead">${T('hero_lead')}</p>
+<div class="badges"><span class="badge">🔌 <b>${T('b_off')}</b></span><span class="badge">🔒 <b>${T('b_priv')}</b></span><span class="badge">🙋 <b>${T('b_adm')}</b></span><span class="badge">🪟 <b>${T('b_win')}</b></span><span class="badge">🆓 <b>${T('b_free')}</b></span></div>
+<div class="cta"><a class="btn pri" href="${REL}" target="_blank" rel="noopener">${T('btn_dl')}</a><a class="btn" href="#sim">${T('btn_try')}</a><a class="btn" href="#licenses">${T('btn_lic')}</a></div>
+<div class="note">${T('hero_note')}</div>`}
+function renderFeat(){$('#featc').innerHTML=`<h2>${T('feat_h')}</h2><p class="sub">${T('feat_sub')}</p><div class="grid">`+
+ F.map(f=>`<div class="card"><div class="ic" aria-hidden="true">${f[0]}</div><h3>${lang=='de'?f[1]:f[2]}</h3><p>${lang=='de'?f[3]:f[4]}</p></div>`).join('')+
+ `</div><div class="note ok"><b>${T('hear_h')}</b><br>${T('hear_p')}</div>`}
+function renderFoot(){$('#foot').innerHTML=`<p>${T('foot1')}</p><p>${T('foot2')}</p>`}
+function licCards(){return `<div class="lic-grid">`+LIC[lang].map(c=>`<div class="card"><h3>${c[0]}</h3><ul>${c[1].map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')+`</div>`}
+function renderLic(){$('#licc').innerHTML=`<h2>${T('lic_h')}</h2><p class="sub">${T('lic_sub')}</p>${licCards()}`}
+/* ===== Simulation: Rahmen ===== */
+const MENU=[['listen','m_listen'],['quiz','m_quiz'],['chap','m_chap'],['mp3','m_mp3'],['sd','m_sd'],['search','m_search'],['prog','m_prog'],['set','m_set'],['help','m_help'],['info','m_info']];
+function renderSim(){
+  $('#simc').innerHTML=`<h2>${T('sim_h')}</h2><p class="sub">${T('sim_sub')}</p>
+  <div class="demos"><span class="lbl">${T('demo_l')}</span>
+   <button class="btn sm" onclick="demo('excel')">${T('d_excel')}</button><button class="btn sm" onclick="demo('pdf')">${T('d_pdf')}</button>
+   <button class="btn sm" onclick="demo('xls')">${T('d_xls')}</button><button class="btn sm" onclick="demo('mp3')">${T('d_mp3')}</button><button class="btn sm" onclick="demo('quiz')">${T('d_quiz')}</button></div>
+  <div class="win"><div class="tb"><span><i></i>${T('brand')}</span><span class="ctl" aria-hidden="true">– ▢ ✕</span></div>
+  <div class="app" id="app" style="--fs:${S.fs}px"><nav class="side" id="side" aria-label="Menü"></nav><div class="main"><div class="page" id="pg"></div><div class="status" id="stt" role="status"></div></div></div></div>`;
+  drawSide();go(S.page,true);setStatus(T('status0'));
+}
+function drawSide(){$('#side').innerHTML=MENU.map(m=>`<button ${S.page==m[0]?'aria-current="true"':''} onclick="go('${m[0]}')">${T(m[1])}</button>`).join('')+
+ `<div class="sp"></div><div class="user">${T('signed')}<select aria-label="${T('signed')}"><option>Benutzer</option><option>Gast</option></select><div style="margin-top:6px">${T('shared')}</div></div>`}
+function setStatus(m){const s=$('#stt');if(s)s.textContent=m}
+function go(p,keep){if(!keep)stopSpeak();S.page=p;drawSide();const pg=$('#pg');if(!pg)return;pg.innerHTML=(P[p]||P.listen)();bind(p)}
+function re(){go(S.page,true)}
+function demo(k){
+  $('#sim').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+   if(k=='excel'){go('chap');openXl()}
+   else if(k=='pdf'){go('chap');S.sel=0;re();exportFile('pdf')}
+   else if(k=='xls'){go('chap');S.sel=0;re();exportFile('xls')}
+   else if(k=='mp3'){go('mp3');S.mp3.sel=S.chs.map(()=>true);re();mp3Run()}
+   else if(k=='quiz'){go('quiz');S.q=Object.assign(S.q,{i:0,shown:false,fb:null,done:false,right:0});re()}
+  },350)}
+/* ===== Seiten ===== */
+const P={};
+function chSelect(id,val,act){return `<select class="fld" id="${id}" onchange="${act}(+this.value)" aria-label="${T('chapter')}">`+S.chs.map((c,i)=>`<option value="${i}" ${i==val?'selected':''}>${esc(cname(c))} (${c.items.length})</option>`).join('')+`</select>`}
+/* -- Vorlesen -- */
+P.listen=()=>{const c=S.chs[S.cur];
+ return `<h2 class="pt">${T('l_title')}</h2><div class="muted">${T('l_sub')}</div>
+ <div class="row" style="margin-top:12px">${chSelect('lch',S.cur,'setCur')}<span class="chip">${c.items.length} ${T('items')}</span></div>
+ <div class="list" id="lst">${c.items.map((x,i)=>`<div class="sent ${S.playing==i?'on':''}"><button class="play" aria-label="Play" onclick="playOne(${i})">▶</button><div><div class="en">${esc(x.en)}</div>${x.pr?`<div class="pr">${esc(x.pr)}</div>`:''}<div class="de">${esc(x.de)}</div>${x.xe?`<div class="ex">${esc(x.xe)} – ${esc(x.xd)}</div>`:''}</div></div>`).join('')}</div>
+ <div class="player"><button class="b pri" id="pall" onclick="playAll()">${S.run?T('stop'):T('playall')}</button>
+ <div><label for="tmp">${T('tempo')}: <b id="tv">${S.tempo.toFixed(1)}</b></label><input type="range" id="tmp" min="0.6" max="1.2" step="0.1" value="${S.tempo}" oninput="S.tempo=+this.value;$('#tv').textContent=S.tempo.toFixed(1)"></div>
+ <div><label>${T('voice')}</label><select class="fld"><option>${T('voiceval')}</option></select></div>
+ <label style="display:flex;gap:6px;align-items:center;color:var(--ink);font-size:14px"><input type="checkbox" ${S.hoer?'checked':''} onchange="S.hoer=this.checked;toast('${T('hoer_note').replace(/'/g,"\\'")}')"> ${T('hoer')}</label></div>`};
+function setCur(i){stopSpeak();S.cur=i;re()}
+function playOne(i){stopSpeak();S.playing=i;mark();speak(S.chs[S.cur].items[i].en,'en',()=>{S.playing=-1;mark()})}
+function playAll(){if(S.run){stopSpeak();re();return}S.run=true;re();let i=0;const items=S.chs[S.cur].items;
+ const next=()=>{if(!S.run)return;if(i>=items.length){S.run=false;S.playing=-1;re();return}S.playing=i;mark();const e=document.querySelectorAll('.sent')[i];e&&e.scrollIntoView({block:'nearest'});speak(items[i].en,'en',()=>{i++;setTimeout(next,350)})};next()}
+/* -- Abfrage -- */
+function cards(){return S.chs[S.q.ch].items}
+P.quiz=()=>{const q=S.q,its=cards();
+ const head=`<h2 class="pt">${T('q_title')}</h2><div class="muted">${T('q_sub')}</div>
+ <div class="row" style="margin-top:12px">${chSelect('qch',q.ch,'qSetCh')}
+ <select class="fld" onchange="qSetDir(this.value)" aria-label="Richtung">${[['ed','dir_ed'],['de','dir_de'],['ho','dir_ho']].map(d=>`<option value="${d[0]}" ${q.dir==d[0]?'selected':''}>${T(d[1])}</option>`).join('')}</select>
+ <span class="chip">${T('card')} ${Math.min(q.i+1,its.length)}/${its.length}</span></div>`;
+ if(q.done)return head+`<div class="qcard"><div class="q">🎉 ${T('q_done_h')}</div><p>${T('q_done_p')} (${q.right}/${its.length})</p><button class="b pri" onclick="qRestart()">${T('q_again')}</button></div>`;
+ const it=its[q.i],lv=getSt(q.ch,q.i,q.dir);
+ const dots=`<div class="dots" title="${T('stage')} ${lv}">${[1,2,3,4].map(n=>`<i class="${lv>=n?'f':''}"></i>`).join('')}</div>`;
+ let body='';
+ if(q.dir=='ho'){
+  body=`<div class="dir">${T('dir_ho')}</div><div class="q">🔊</div><button class="b" onclick="qHear()">${T('q_hear')}</button>
+   <div class="row" style="justify-content:center;margin-top:14px"><input class="fld" id="qin" placeholder="${T('q_type')}" ${q.fb?'disabled':''} autocomplete="off" onkeydown="if(event.key=='Enter'){event.stopPropagation();qCheck()}"><button class="b pri" ${q.fb?'disabled':''} onclick="qCheck()">${T('q_check')}</button></div>`;
+ }else{
+  const qq=q.dir=='ed'?it.en:it.de,aa=q.dir=='ed'?it.de:it.en;
+  body=`<div class="dir">${T(q.dir=='ed'?'dir_ed':'dir_de')}</div><div class="q">${esc(qq)}</div><div class="a">${q.shown?esc(aa):'&nbsp;'}</div>`+
+   (q.shown&&!q.fb?`<div class="row" style="justify-content:center"><button class="b ok" onclick="qAns(true)">${T('q_know')} <span class="kbd">J</span></button><button class="b bad" onclick="qAns(false)">${T('q_dont')} <span class="kbd">N</span></button></div>`:(!q.shown?`<button class="b pri" onclick="qShow()">${T('q_reveal')} <span class="kbd">Enter</span></button>`:''));
+ }
+ let fb='';if(q.fb){fb=`<div class="fb ${q.fb.ok?'ok':'bad'}">${q.fb.msg}</div><div style="margin-top:12px"><button class="b pri" onclick="qNext()">${T('x_next')} ›</button></div>`}
+ return head+`<div class="qcard">${dots}${body}${fb}</div><p class="muted" style="text-align:center;font-size:14px;margin-top:12px">${T('q_hint')}</p>`};
+function qSetCh(i){S.q.ch=i;qRestart()}
+function qSetDir(d){S.q.dir=d;qRestart()}
+function qRestart(){Object.assign(S.q,{i:0,shown:false,fb:null,done:false,right:0});re()}
+function qShow(){S.q.shown=true;re()}
+function qHear(){speak(cards()[S.q.i].en,'en')}
+function qAns(ok,msgExtra){const q=S.q,k=stKey(q.ch,q.i,q.dir),cur=S.st[k]||0;const ns=ok?Math.min(4,cur+1):0;S.st[k]=ns;if(ok)q.right++;
+ const iv=[1,1,3,7,14][ns];const dd=iv==1?T('day1'):iv==3?T('days3'):iv==7?T('days7'):T('days14');
+ q.fb={ok,msg:(msgExtra||'')+T('stage')+' '+ns+' · '+T('q_next')+' '+dd};S.today=true;re()}
+function qCheck(){const q=S.q;if(q.fb)return;const v=($('#qin')||{}).value||'';const it=cards()[q.i];
+ const ok=norm(v).replace(/[^a-z0-9 ]/g,'').trim()==norm(it.en).replace(/[^a-z0-9 ]/g,'').trim()&&v.trim()!=='';
+ qAns(ok,ok?T('q_ok')+' ':T('q_bad')+' <b>'+esc(it.en)+'</b> · ')}
+function qNext(){const q=S.q;q.fb=null;q.shown=false;q.i++;if(q.i>=cards().length)q.done=true;re();if(q.dir=='ho'&&!q.done)setTimeout(qHear,150)}
+document.addEventListener('keydown',e=>{
+  if(S.page!='quiz'||S.q.done||$('#ov').classList.contains('on'))return;
+  const tag=(e.target.tagName||'').toLowerCase();if(tag=='input'||tag=='select'||tag=='textarea')return;
+  const q=S.q;if(q.dir=='ho')return;
+  if(q.fb){if(e.key=='Enter'||e.key==' '){e.preventDefault();qNext()}return}
+  if(!q.shown&&e.key=='Enter'){e.preventDefault();qShow()}
+  else if(q.shown&&(e.key=='j'||e.key=='J'))qAns(true);
+  else if(q.shown&&(e.key=='n'||e.key=='N'))qAns(false);
+});
+/* -- Kapitel -- */
+function prog(ci){const c=S.chs[ci];let s=0;c.items.forEach((x,i)=>['ed','de','ho'].forEach(d=>s+=getSt(ci,i,d)));return Math.round(100*s/(4*c.items.length*3||1))}
+P.chap=()=>{const c=S.chs[S.sel]||S.chs[0];
+ return `<h2 class="pt">${T('c_title')}</h2><div class="muted">${T('c_sub')}</div>
+ <div class="row" style="margin-top:12px"><button class="b" onclick="newCh()">${T('c_new')}</button><button class="b pri" onclick="openXl()">${T('c_xl')}</button></div>
+ <table class="tab"><thead><tr><th>#</th><th>${T('c_name')}</th><th>${T('c_cnt')}</th><th>${T('p_title')}</th></tr></thead><tbody>`+
+ S.chs.map((x,i)=>`<tr class="${i==S.sel?'hl':''}" onclick="S.sel=${i};re()" ondblclick="S.cur=${i};go('listen')" style="cursor:pointer"><td>${i+1}</td><td>${esc(cname(x))}</td><td>${x.items.length}</td><td><div class="bar"><i style="width:${prog(i)}%"></i></div></td></tr>`).join('')+
+ `</tbody></table>
+ <div class="row" style="margin-top:14px"><b>${T('c_exp')}</b> <span class="muted">${esc(cname(c))}</span>
+  <button class="b" onclick="exportFile('pdf')">📄 PDF</button><button class="b" onclick="exportFile('xls')">📊 Excel</button><button class="b" onclick="exportFile('txt')">📝 TXT</button><button class="b" onclick="S.mp3.sel=S.chs.map((_,k)=>k==S.sel);go('mp3')">🎧 MP3</button></div>
+ <h3 style="margin-top:20px;font-size:calc(var(--fs));">${T('c_add')} – ${esc(cname(c))}</h3>
+ <div class="row"><input class="fld" id="ae" placeholder="${T('c_en')}"><input class="fld" id="ad" placeholder="${T('c_de')}"><input class="fld" id="ap" placeholder="${T('c_pr')}" style="max-width:150px"><button class="b pri" onclick="addItem()">＋</button></div>
+ <div class="row" style="margin-top:8px"><input class="fld" id="axe" placeholder="${T('c_ex')} (EN)" style="flex:1"><input class="fld" id="axd" placeholder="${T('c_ex')} (DE)" style="flex:1"></div>`};
+function newCh(){const n=prompt(T('c_prompt'));if(!n||!n.trim())return;const o={de:n.trim(),en:n.trim()};S.chs.push({t:o,items:[]});S.sel=S.chs.length-1;S.mp3.sel.push(true);re();toast(T('c_added'))}
+function addItem(){const e=$('#ae').value.trim(),d=$('#ad').value.trim();if(!e||!d){toast(T('c_need'));return}
+ const c=S.chs[S.sel];if(c.items.some(x=>norm(x.en)==norm(e))){toast(T('c_dup'));return}
+ c.items.push({en:e,de:d,pr:$('#ap').value.trim(),xe:$('#axe').value.trim(),xd:$('#axd').value.trim()});re();toast(T('c_added'))}
+/* -- Dialoge -- */
+function openDlg(h){$('#dlg').innerHTML=h;$('#ov').classList.add('on')}
+function closeDlg(){$('#ov').classList.remove('on')}
+document.addEventListener('keydown',e=>{if(e.key=='Escape')closeDlg()});
+$('#ov').addEventListener('click',e=>{if(e.target.id=='ov')closeDlg()});
+function xlGrid(rows,sheets,active){const cols=Math.max(...rows.map(r=>r.cells.length));const L2='ABCDEFGH'.split('');
+ return `<div class="xl"><table><thead><tr><th class="rn"></th>${Array.from({length:cols},(_,i)=>`<th>${L2[i]}</th>`).join('')}</tr></thead><tbody>`+
+ rows.map((r,i)=>`<tr><th class="rn">${i+1}</th>${Array.from({length:cols},(_,j)=>`<td class="${r.cls&&r.cls[j]||r.c||''}">${esc(r.cells[j]??'')}</td>`).join('')}</tr>`).join('')+`</tbody></table>
+ <div class="sheets">${sheets.map(s=>`<span class="${s==active?'a':''}">${esc(s)}</span>`).join('')}</div></div>`}
+function chRows(c,mode){ // mode: 'chap' (Vorlage/Export) | 'mp3'
+ if(mode=='mp3'){const rows=[{cells:['Nr',lang=='de'?'Deutsch':'German',lang=='de'?'Englisch':'English'],c:'h'}];c.items.forEach((x,i)=>rows.push({cells:[i+1,x.de,x.en]}));return rows}
+ const rows=[{cells:[T('x_title_lbl'),cname(c)],cls:['g','t']},{cells:[T('x_about'),(c.about&&c.about[lang])||''],cls:['g']},{cells:[]},
+  {cells:[T('x_req'),T('x_reqd'),T('x_opt1'),T('x_opt2'),T('x_opt3')],c:'h'}];
+ c.items.forEach(x=>rows.push({cells:[x.en,x.de,x.pr||'',x.xe||'',x.xd||'']}));return rows}
+/* -- Export (PDF/Excel/TXT) -- */
+function exportFile(kind){const c=S.chs[S.sel]||S.chs[0];const nm=String(S.sel+1).padStart(4,'0')+' '+cname(c).slice(0,25);const ext={pdf:'pdf',xls:'xlsx',txt:'txt'}[kind];
+ let prev='';
+ if(kind=='pdf')prev=`<div class="paper"><h4>${esc(cname(c))}</h4><div class="m">${T('brand')} · ${c.items.length} ${T('items')}</div><table><thead><tr><th>${T('c_en')}</th><th>${T('c_de')}</th></tr></thead><tbody>${c.items.map(x=>`<tr><td><b>${esc(x.en)}</b>${x.pr?`<br><small style="color:#666">${esc(x.pr)}</small>`:''}</td><td>${esc(x.de)}</td></tr>`).join('')}</tbody></table><div class="ft">${T('pdf_foot')} · 1/1</div></div>`;
+ else if(kind=='xls')prev=xlGrid(chRows(c),['Kapitel'],'Kapitel');
+ else prev=`<pre class="log" style="max-height:none">${c.items.map(x=>esc(x.en)+'\t'+esc(x.de)).join('\n')}</pre>`;
+ openDlg(`<header><span>${T(kind=='pdf'?'f_pdf':kind=='xls'?'f_xls':'f_txt')} – ${esc(nm)}.${ext}</span><button class="b" onclick="closeDlg()" aria-label="Close">✕</button></header><div class="bd">
+ <div class="dlbar"><span>⬇</span><span><b>${esc(nm)}.${ext}</b><br><span class="muted" id="dls">${T('dl_saving')}</span></span><span class="p"><i id="dlp"></i></span></div>${prev}</div>
+ <footer><button class="b" onclick="closeDlg()">${T('x_close')}</button></footer>`);
+ requestAnimationFrame(()=>{const p=$('#dlp');if(p)p.style.width='100%'});
+ setTimeout(()=>{const s=$('#dls');if(s)s.textContent=T('dl_done')},1200)}
+/* -- Excel hochladen (3 Schritte) -- */
+function openXl(){S.xl={step:1,pick:false,sheet:'k1',done:false};drawXl()}
+function xlSheetRows(){const sh=S.xl.sheet;
+ if(sh=='guide')return [{cells:[T('guide1')],cls:['t']},{cells:[T('guide2')]},{cells:[T('guide3')]},{cells:[T('guide4')]},{cells:[T('guide5')]}];
+ if(sh=='ex')return [{cells:[T('x_title_lbl'),lang=='de'?'Im Café (Beispiel – wird nicht importiert)':'At the café (example – not imported)'],cls:['g','t']},{cells:[T('x_about'),lang=='de'?'Bestellen und Bezahlen':'Ordering and paying'],cls:['g']},{cells:[]},{cells:[T('x_req'),T('x_reqd'),T('x_opt1'),T('x_opt2'),T('x_opt3')],c:'h'},{cells:['coffee','der Kaffee','/ˈkɒfi/','I would like a coffee.','Ich hätte gern einen Kaffee.']}];
+ return chRows(XLCH)}
+function drawXl(){const x=S.xl;const st=`<div class="steps"><i class="on"></i><i class="${x.step>1?'on':''}"></i><i class="${x.step>2?'on':''}"></i></div>`;let bd='',ft='';
+ const head=`<header><span>${T('x_title')} – ${T('x'+x.step)}</span><button class="b" onclick="closeDlg()" aria-label="Close">✕</button></header>`;
+ if(x.step==1){bd=`<p>${T('x1_p')}</p><div class="fdlg"><div class="path">C:\\Vokabeltrainer\\daten</div>
+  <div class="it" role="option" aria-selected="${x.pick}" tabindex="0" onclick="S.xl.pick=true;drawXl()" onkeydown="if(event.key=='Enter'){S.xl.pick=true;drawXl()}">📗 Kapitel_Vorlage.xlsx <span style="margin-left:auto;opacity:.7">13 KB</span></div></div>
+  <p class="muted" style="margin-top:10px">${T('x_name')} <code>${x.pick?'Kapitel_Vorlage.xlsx':''}</code></p>`;
+  ft=`<button class="b" onclick="closeDlg()">${T('x_cancel')}</button><button class="b pri" onclick="${'xlGo(2)'}">${T('x_open')}</button>`}
+ else if(x.step==2){bd=`<p>${T('x2_p')}</p><div class="tabs" role="tablist">${[['guide','t_guide'],['ex','t_ex'],['k1','t_k1']].map(s=>`<button role="tab" aria-selected="${x.sheet==s[0]}" onclick="S.xl.sheet='${s[0]}';drawXl()">${T(s[1])}</button>`).join('')}</div>`+
+  xlGrid(xlSheetRows(),[T('t_guide'),T('t_ex'),T('t_k1')],{guide:T('t_guide'),ex:T('t_ex'),k1:T('t_k1')}[x.sheet]);
+  ft=`<button class="b" onclick="xlGo(1)">${T('x_back')}</button><button class="b pri" onclick="xlGo(3)">${T('x_imp')}</button>`}
+ else{if(!x.done){x.done=true;S.chs.push({t:XLCH.t,about:XLCH.about,items:XLCH.items.map(x=>Object.assign({},x))});S.mp3.sel.push(true);S.sel=S.chs.length-1}
+  bd=`<div class="note ok"><b>✔ ${T('x3_ok')}</b></div><p>${T('x3_p')} <b>${esc(cname(XLCH))}</b></p><p>${XLCH.items.length} ${T('x3_n')} 0</p>`;
+  ft=`<button class="b" onclick="closeDlg()">${T('x_close')}</button><button class="b pri" onclick="closeDlg();S.cur=S.chs.length-1;go('listen')">${T('x3_go')}</button>`}
+ openDlg(head+`<div class="bd">${st}${bd}</div><footer>${ft}</footer>`)}
+function xlGo(n){if(n==2&&!S.xl.pick){toast(T('x_pick'));return}S.xl.step=n;drawXl();if(n==3)re()}
+/* -- MP3 -- */
+function mpName(i,c){return String(i+1).padStart(4,'0')+' '+cname(c).replace(/[\\/:*?"<>|]/g,'').slice(0,25).trim()}
+P.mp3=()=>{const m=S.mp3;
+ return `<h2 class="pt">${T('m_title')}</h2><div class="muted">${T('m_sub')}</div>
+ <div class="row" style="margin:10px 0"><button class="b" onclick="S.mp3.sel=S.chs.map(()=>true);re()">${T('m_all')}</button><button class="b" onclick="S.mp3.sel=S.chs.map(()=>false);re()">${T('m_none')}</button></div>
+ <div>${S.chs.map((c,i)=>`<label class="chk"><input type="checkbox" ${m.sel[i]?'checked':''} onchange="S.mp3.sel[${i}]=this.checked"> ${esc(cname(c))} <span class="muted">(${c.items.length})</span></label>`).join('')}</div>
+ <div class="row" style="margin-top:12px"><label>${T('m_order')} <select class="fld" style="min-width:0" onchange="S.mp3.order=this.value"><option value="de" ${m.order=='de'?'selected':''}>${T('m_o1')}</option><option value="en" ${m.order=='en'?'selected':''}>${T('m_o2')}</option></select></label>
+ <label>${T('m_p1')} <input class="fld" type="number" step="0.5" min="0" max="10" value="${m.p1}" style="width:80px" onchange="S.mp3.p1=+this.value"></label>
+ <label>${T('m_p2')} <input class="fld" type="number" step="0.5" min="0" max="10" value="${m.p2}" style="width:80px" onchange="S.mp3.p2=+this.value"></label></div>
+ <div class="row" style="margin-top:14px"><button class="b pri" onclick="mp3Run()" ${m.busy?'disabled':''}>${T('m_go')}</button><button class="b" onclick="mp3Stop()" ${m.busy?'':'disabled'}>${T('m_stop')}</button></div>
+ <p class="muted" style="font-size:14px">${T('m_rule')}</p>
+ <div class="bar" style="margin-top:6px"><i id="mpb" style="width:${m.busy?'':m.res?'100':'0'}%"></i></div>
+ <div class="log" id="mpl">${esc(m.log)}</div><div id="mpr">${mp3Res()}</div>`};
+function mp3Res(){const m=S.mp3;if(!m.res)return '';
+ return `<h3 style="margin-top:14px;font-size:calc(var(--fs) - 1px)">${T('m_done')}</h3><div class="files">`+m.res.map(i=>{const c=S.chs[i];return `<div class="file"><span>🎧</span><span class="nm">${esc(mpName(i,c))}.mp3</span><button class="b" onclick="mp3Sample(${i})">${T('m_play')}</button></div><div class="file"><span>📗</span><span class="nm">${esc(mpName(i,c))}.xlsx</span><button class="b" onclick="mp3View(${i})">${T('m_view')}</button></div>`}).join('')+`</div>`}
+let mpT=null;
+function mp3Stop(){clearTimeout(mpT);S.mp3.busy=false;S.mp3.log+=(lang=='de'?'Abgebrochen.':'Cancelled.')+'\n';if(S.page=='mp3')re()}
+function mp3Run(){const m=S.mp3,idx=S.chs.map((_,i)=>i).filter(i=>m.sel[i]);if(!idx.length){toast(T('m_pick'));return}
+ m.busy=true;m.res=null;m.log='';re();let k=0;
+ const step=()=>{if(!m.busy)return;if(k>=idx.length){m.busy=false;m.res=idx;m.log+=T('m_ready')+' '+idx.length+'\n';if(S.page=='mp3'){re();const l=$('#mpl');l&&(l.scrollTop=l.scrollHeight)}return}
+  const i=idx[k],c=S.chs[i];m.log+=T('m_run')+' '+mpName(i,c)+'.mp3 … ('+c.items.length+' '+T('items')+')\n';k++;
+  if(S.page=='mp3'){const b=$('#mpb'),l=$('#mpl');if(b)b.style.width=Math.round(100*k/idx.length)+'%';if(l){l.textContent=m.log;l.scrollTop=l.scrollHeight}}
+  mpT=setTimeout(step,750)};step()}
+function mp3Sample(i){stopSpeak();S.run=true;const c=S.chs[i],m=S.mp3,list=c.items.slice(0,3);let k=0;const a=m.order=='de'?['de','en']:['en','de'];
+ const next=()=>{if(!S.run||k>=list.length){S.run=false;return}const it=list[k];speak(it[a[0]],a[0],()=>setTimeout(()=>speak(it[a[1]],a[1],()=>{k++;setTimeout(next,Math.min(m.p2,3)*1000)}),Math.min(m.p1,3)*1000))};next();toast(T('m_play'))}
+function mp3View(i){const c=S.chs[i];openDlg(`<header><span>${T('f_xls')} – ${esc(mpName(i,c))}.xlsx</span><button class="b" onclick="closeDlg()" aria-label="Close">✕</button></header><div class="bd">${xlGrid(chRows(c,'mp3'),['Kapitel'],'Kapitel')}</div><footer><button class="b" onclick="closeDlg()">${T('x_close')}</button></footer>`)}
+/* -- Zusatzbereich -- */
+P.sd=()=>`<h2 class="pt">${T('sd_title')}</h2><div class="muted">${T('sd_p')}</div><div class="empty">📚<br>${T('sd_e')}</div>`;
+/* -- Suchen -- */
+P.search=()=>{const s=S.sr;return `<h2 class="pt">${T('s_title')}</h2><div class="muted">${T('s_sub')}</div>
+ <div class="row" style="margin-top:12px"><input class="fld" id="sq" placeholder="${T('s_ph')}" value="${esc(s.q)}" oninput="S.sr.q=this.value;doSearch()" style="flex:1;min-width:180px" autocomplete="off">
+ <select class="fld" style="min-width:0" onchange="S.sr.lang=this.value;doSearch()" aria-label="${T('s_lang')}"><option value="both" ${s.lang=='both'?'selected':''}>${T('s_both')}</option><option value="en" ${s.lang=='en'?'selected':''}>${T('s_en')}</option><option value="de" ${s.lang=='de'?'selected':''}>${T('s_de')}</option></select></div>
+ <div class="row" style="margin-top:8px"><label><input type="checkbox" ${s.whole?'checked':''} onchange="S.sr.whole=this.checked;doSearch()"> ${T('s_whole')}</label><label><input type="checkbox" ${s.ex?'checked':''} onchange="S.sr.ex=this.checked;doSearch()"> ${T('s_ex')}</label></div>
+ <p class="muted" style="font-size:14px">${T('s_tip')}</p><div id="sres"></div>`};
+function hl(t,q){if(!q)return esc(t);const n=norm(t),nq=norm(q);let o='',p=0,k;while((k=n.indexOf(nq,p))>=0){o+=esc(t.slice(p,k))+'<mark>'+esc(t.slice(k,k+q.length))+'</mark>';p=k+q.length}return o+esc(t.slice(p))}
+function hit(t,q,whole){const n=norm(t),nq=norm(q);if(!whole)return n.includes(nq);return new RegExp('(^|[^a-z0-9])'+nq.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'($|[^a-z0-9])').test(n)}
+function doSearch(){const s=S.sr,q=s.q.trim(),r=$('#sres');if(!r)return;if(!q){r.innerHTML='';return}
+ const out=[];S.chs.forEach((c,ci)=>c.items.forEach((x,ii)=>{let ok=false;
+  if(s.lang!='de'&&hit(x.en,q,s.whole))ok=true;if(s.lang!='en'&&hit(x.de,q,s.whole))ok=true;
+  if(!ok&&s.ex){if(s.lang!='de'&&x.xe&&hit(x.xe,q,s.whole))ok=true;if(s.lang!='en'&&x.xd&&hit(x.xd,q,s.whole))ok=true}
+  if(ok)out.push([ci,ii,x])}));
+ r.innerHTML=out.length?`<div class="muted" style="margin-top:8px">${out.length} ${T('s_hits')}</div><table class="tab"><thead><tr><th></th><th>${T('c_en')}</th><th>${T('c_de')}</th><th>${T('s_where')}</th></tr></thead><tbody>`+out.map(o=>`<tr><td><button class="play" style="width:32px;height:32px;font-size:12px" onclick="speak(S.chs[${o[0]}].items[${o[1]}].en,'en')" aria-label="Play">▶</button></td><td>${hl(o[2].en,q)}</td><td>${hl(o[2].de,q)}</td><td>${esc(cname(S.chs[o[0]]))}</td></tr>`).join('')+`</tbody></table>`:`<div class="empty">${T('s_none')}</div>`}
+/* -- Fortschritt -- */
+P.prog=()=>{let tot=0,know=0;S.chs.forEach((c,ci)=>c.items.forEach((x,ii)=>['ed','de','ho'].forEach(d=>{tot++;if(getSt(ci,ii,d)>=3)know++})));
+ return `<h2 class="pt">${T('p_title')}</h2><div class="muted">${T('p_sub')}</div>
+ <div class="row" style="margin:14px 0"><div class="card"><div class="muted" style="font-size:13px">${T('p_streak')}</div><div style="font-size:30px;font-weight:700;color:var(--accent)">${S.streak+(S.today?1:0)}</div><div class="muted" style="font-size:13px">${T('p_days')}</div></div>
+ <div class="card"><div class="muted" style="font-size:13px">${T('p_cards')}</div><div style="font-size:30px;font-weight:700;color:var(--accent)">${know}/${tot}</div></div></div>
+ <table class="tab"><tbody>${S.chs.map((c,i)=>`<tr><td>${esc(cname(c))}</td><td style="width:50%"><div class="bar"><i style="width:${prog(i)}%"></i></div></td><td><b>${prog(i)} %</b></td></tr>`).join('')}</tbody></table>
+ <p class="muted" style="font-size:14px;margin-top:14px">${T('p_leg')}</p>`};
+/* -- Einstellungen -- */
+P.set=()=>`<h2 class="pt">${T('t_title')}</h2>
+ <div class="row" style="margin-top:14px"><label for="fsr">${T('t_fs')}: <b id="fsv">${S.fs}</b></label><input id="fsr" type="range" min="14" max="24" value="${S.fs}" oninput="S.fs=+this.value;$('#app').style.setProperty('--fs',S.fs+'px');$('#fsv').textContent=S.fs"></div>
+ <div class="row" style="margin-top:12px"><label>${T('t_th')} <select class="fld" style="min-width:0" onchange="themeSel(this.value)"><option value="auto">${T('t_auto')}</option><option value="light">${T('t_light')}</option><option value="dark">${T('t_dark')}</option></select></label></div>
+ <div class="row" style="margin-top:14px"><button class="b" onclick="toast(T('t_bkdone'))">${T('t_bk')}</button><button class="b" onclick="go('chap');openXl()">${T('t_imp')}</button></div>
+ <p class="muted" style="margin-top:16px">${T('t_users')}</p><div class="row"><span class="chip">Benutzer</span><span class="chip">Gast</span></div>
+ <p class="muted" style="margin-top:16px;font-size:14px">${T('t_db')}</p>`;
+function themeSel(v){const r=document.documentElement;if(v=='auto')delete r.dataset.theme;else r.dataset.theme=v}
+/* -- Hilfe / Info -- */
+P.help=()=>`<h2 class="pt">${T('h_title')}</h2><div class="help">${HELP[lang].map(h=>`<h3>${h[0]}</h3><p>${h[1]}</p>`).join('')}</div>`;
+P.info=()=>`<h2 class="pt">${T('i_title')}</h2><div class="help" style="margin-top:10px">${licCards()}</div>`;
+function bind(p){if(p=='search')doSearch()}
+/* ===== Installation ===== */
+function renderInstall(){const w=S.w;
+ let bd='',ft='';
+ const next=`<button class="b pri" onclick="wGo(${w.step+1})" ${w.step==2&&!w.acc?'disabled':''}>${w.step==4?T('w_inst'):T('w_next')}</button>`;
+ const back=`<button class="b" onclick="wGo(${w.step-1})" ${w.step==1?'disabled':''}>${T('w_back')}</button>`;
+ if(w.step==1){bd=`<h3>${T('w1')}</h3><p>${T('w1p')}</p>`;ft=back+next+`<button class="b" onclick="wGo(1)">${T('w_cancel')}</button>`}
+ else if(w.step==2){bd=`<h3>${T('w2')}</h3><div class="lic" tabindex="0">${LIC[lang][0][1].map(x=>'• '+x).join('<br>')}<br><br>${LIC[lang][4][1].map(x=>'• '+x).join('<br>')}</div><label class="chk"><input type="checkbox" ${w.acc?'checked':''} onchange="S.w.acc=this.checked;renderInstall()"> ${T('w2acc')}</label>`;ft=back+next+`<button class="b" onclick="wGo(1)">${T('w_cancel')}</button>`}
+ else if(w.step==3){bd=`<h3>${T('w3')}</h3><p>${T('w3p')}</p><div class="row"><input class="fld" style="flex:1" value="${esc(w.dir)}" oninput="S.w.dir=this.value" aria-label="${T('w3')}"></div><div class="row" style="margin-top:8px"><button class="b" onclick="S.w.dir='C:\\\\Vokabeltrainer';renderInstall()">C:\\Vokabeltrainer</button><button class="b" onclick="S.w.dir='D:\\\\Vokabeltrainer';renderInstall()">D:\\Vokabeltrainer</button></div>`;ft=back+next+`<button class="b" onclick="wGo(1)">${T('w_cancel')}</button>`}
+ else if(w.step==4){bd=`<h3>${T('w4')}</h3><label class="chk"><input type="checkbox" ${w.desk?'checked':''} onchange="S.w.desk=this.checked"> ${T('w4c')}</label><p class="muted">${T('w4p')}</p><p class="muted" style="font-size:14px">→ ${esc(w.dir)}</p>`;ft=back+next+`<button class="b" onclick="wGo(1)">${T('w_cancel')}</button>`}
+ else if(w.step==5){bd=`<h3>${T('w5')}</h3><div class="bar" style="margin:20px 0"><i id="wp" style="width:${w.pct}%"></i></div><p class="muted" style="font-size:14px" id="wf"></p>`;ft=`<button class="b" disabled>${T('w_next')}</button>`}
+ else{bd=`<h3>${T('w6')}</h3><p>${T('w6p')}</p><label class="chk"><input type="checkbox" checked> ${T('w6s')}</label>`;ft=`<button class="b pri" onclick="wGo(1)">${T('w_fin')}</button>`}
+ $('#instc').innerHTML=`<h2>${T('inst_h')}</h2><p class="sub">${T('inst_sub')}</p>
+ <div class="steps" style="max-width:640px;margin-inline:auto">${[1,2,3,4,5,6].map(n=>`<i class="${w.step>=n?'on':''}"></i>`).join('')}</div>
+ <div class="wiz"><div class="wt">${T('w_title')}</div><div class="wb">${bd}</div><div class="wf">${ft}</div></div>
+ <div class="grid" style="margin-top:24px"><div class="card"><h3>${T('inst_files')}</h3><ul style="margin:0;padding-left:20px;color:var(--muted);font-size:15px"><li>${T('inst_f1')}</li><li>${T('inst_f2')}</li><li>${T('inst_f3')}</li><li>${T('inst_f4')}</li><li>${T('inst_f5')}</li></ul></div>
+ <div class="note" style="margin:0">${T('inst_warn')}</div></div>`;
+ if(w.step==5)wRun()}
+let wT=null;
+function wGo(n){clearTimeout(wT);if(n<1)n=1;if(n==1){S.w.pct=0;S.w.acc=false}S.w.step=n;renderInstall()}
+function wRun(){const files=['Vokabeltrainer.exe','voices\\en_US-ryan-medium\\…','voices\\de_DE-thorsten-medium\\…','daten\\Kapitel_Vorlage.xlsx','docs\\Bedienungsanleitung_Vokabeltrainer.docx','LIZENZEN.txt'];
+ const tick=()=>{if(S.w.step!=5)return;S.w.pct+=8;const p=$('#wp');if(p)p.style.width=Math.min(100,S.w.pct)+'%';const f=$('#wf');if(f)f.textContent=S.w.dir+'\\'+files[Math.min(files.length-1,Math.floor(S.w.pct/17))];
+  if(S.w.pct>=100){S.w.step=6;renderInstall()}else wT=setTimeout(tick,260)};wT=setTimeout(tick,260)}
+/* ===== Start ===== */
+function renderAll(){
+  document.querySelectorAll('[data-i]').forEach(e=>e.innerHTML=T(e.dataset.i));
+  $('#bde').setAttribute('aria-pressed',lang=='de');$('#ben').setAttribute('aria-pressed',lang=='en');
+  renderHero();renderFeat();renderSim();renderInstall();renderLic();renderFoot();document.title=T('brand')+' – Simulation';
+}
+document.documentElement.lang=lang;renderAll();
+</script></body></html>
