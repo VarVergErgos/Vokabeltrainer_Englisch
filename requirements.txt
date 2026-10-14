@@ -1,0 +1,6 @@
+PySide6
+openpyxl
+numpy
+sherpa-onnx
+lameenc
+pyinstaller

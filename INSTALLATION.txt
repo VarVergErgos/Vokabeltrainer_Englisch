@@ -1,0 +1,10 @@
+﻿Die Installation ist fertig.
+
+Wo liegt das Programm? Im Ordner, den du im Setup gewaehlt hast (vorgeschlagen: C:\Vokabeltrainer, moeglich auch D:\Vokabeltrainer).
+
+Beim ersten Start ist die Datenbank leer. Die Excel-Vorlage liegt im Unterordner daten (Kapitel_Vorlage.xlsx). Fuelle sie aus und lies sie im Programm ueber Kapitel > Kapitel aus Excel ein.
+
+Die Bedienungsanleitung findest du im Programm (Menue Hilfe) und im Startmenue.
+Hinweise zu Lizenzen: Menue Info & Lizenzen.
+
+Nur fuer private, nicht-kommerzielle Nutzung.

@@ -1,0 +1,91 @@
+# Info, Nutzungsbedingungen und Lizenzen. Eine Quelle fuer die Seite im Programm und die Datei LIZENZEN.txt.
+TITEL = "Info, Nutzung und Lizenzen"
+
+KAPITEL = [
+ ("Nur für private Zwecke", [
+   "Der Vokabeltrainer ist ein privates Lernprogramm. Er darf nur für private, nicht-kommerzielle Zwecke genutzt werden.",
+   ("liste", [
+     "Erlaubt: privat auf dem eigenen Rechner lernen, kostenlos weitergeben.",
+     "Nicht erlaubt: Verkauf, Nutzung in Firmen oder Schulen mit Gewinnabsicht, Einbau in bezahlte Produkte.",
+     "Grund: Die mitgelieferte englische Stimme (Ryan) steht unter einer Lizenz nur für nicht-kommerzielle Nutzung.",
+   ]),
+   "Das Programm wird ohne Garantie geliefert. Die Nutzung geschieht auf eigene Verantwortung. Die Entwicklerin bzw. der Entwickler haftet nicht für Schäden oder Datenverlust. Mache regelmäßig eine Sicherung (Einstellungen > Sicherung mit Datum).",
+ ]),
+ ("Datenschutz", [
+   "Das Programm arbeitet vollständig offline. Es sendet keine Daten ins Internet. Es gibt keine Anmeldung und keine Werbung.",
+   "Alle Daten (Datenbank, Lernstand, Bilder) liegen nur in deinem Programmordner auf deinem Rechner.",
+ ]),
+ ("Installation und Speicherort", [
+   "Das Programm wird mit der Datei Vokabeltrainer_Setup.exe installiert. Dazu sind keine Administratorrechte nötig.",
+   ("liste", [
+     "Vorgeschlagen ist der Ordner C:\\Vokabeltrainer. Du kannst im Setup auch D:\\Vokabeltrainer oder einen anderen Ordner wählen.",
+     "Datenbank, Bilder, Sicherungen und Exporte liegen immer im Programmordner. Wer auf D: installiert, kann den Ordner später kopieren oder sichern.",
+     "Beim ersten Start ist die Datenbank leer. Eine Excel-Vorlage (Ordner daten, Datei Kapitel_Vorlage.xlsx) hilft dir, eigene Kapitel einzulesen: Kapitel > Kapitel aus Excel.",
+   ]),
+ ]),
+ ("Wie das Programm entstanden ist", [
+   "Das Programm wurde im Dialog mit der KI Claude (Anthropic) entwickelt, in kleinen Schritten und mit automatischen Tests. Es ist ein privates Hobby-Projekt für den eigenen Englischkurs.",
+ ]),
+ ("Verwendete Werkzeuge und ihre Lizenzen", [
+   ("liste", [
+     "Python (PSF-Lizenz): Programmiersprache. python.org",
+     "PySide6 / Qt (LGPL-3.0): Fenster und Bedienung. Das Programm verwendet Qt unverändert als Bibliothek. Der Quelltext von Qt ist bei qt.io erhältlich. Du darfst die Qt-Dateien im Programmordner austauschen.",
+     "SQLite (gemeinfrei): Datenbank.",
+     "sherpa-onnx (Apache-2.0): Sprachausgabe ohne Internet. github.com/k2-fsa/sherpa-onnx",
+     "Piper-Stimmmodelle (MIT, Piper-Projekt): Format der Stimmen. github.com/rhasspy/piper",
+     "lameenc (LGPL-3.0, enthält den LAME-MP3-Encoder): MP3-Dateien erzeugen. Das Paket wird unverändert verwendet.",
+     "openpyxl (MIT): Excel-Dateien lesen und schreiben.",
+     "python-docx (MIT): Word-Dateien schreiben.",
+     "numpy (BSD-3): Rechnen mit Audiodaten.",
+     "reportlab (BSD): PDF-Dateien erzeugen.",
+     "PyInstaller (GPL-2.0 mit Ausnahme): packt das Programm zur EXE-Datei. Die Ausnahme erlaubt auch Programme, die nicht unter der GPL stehen.",
+     "Inno Setup (eigene freie Lizenz): erzeugt nur die Setup-Datei und steckt nicht im Programm.",
+   ]),
+   "Alle Lizenztexte stehen im Internet bei den genannten Projekten. Die Rechte an diesen Werkzeugen liegen bei ihren Autoren.",
+ ]),
+ ("Stimmen", [
+   ("liste", [
+     "Englisch: en_US-ryan-medium. Sprecher-Daten: RyanSpeech. Lizenz CC BY-NC-SA 4.0 (Namensnennung, nicht-kommerziell, Weitergabe unter gleichen Bedingungen). Diese Stimme darf nur privat und nicht-kommerziell genutzt werden.",
+     "Deutsch: de_DE-thorsten-medium. Sprecher: Thorsten Müller (Thorsten-Voice). Lizenz CC0, frei nutzbar.",
+     "Die Stimmen wurden mit dem Piper-Projekt trainiert. Quelle der Modelle: huggingface.co/rhasspy/piper-voices",
+   ]),
+   "Erzeugte MP3-Dateien enthalten diese Stimmen. Gib sie deshalb nicht kommerziell weiter. Mit Namensnennung (Stimme Ryan, RyanSpeech, CC BY-NC-SA 4.0) ist die private Weitergabe erlaubt.",
+ ]),
+ ("Deine eigenen Inhalte", [
+   "Das Programm enthält keine Kursinhalte, keine Lehrbücher und keine Vokabellisten. Du trägst eigene Wörter ein oder liest deine eigenen Excel-Dateien ein.",
+   "Kopiere nur Inhalte in das Programm, die du selbst nutzen darfst. Gekaufte Bücher, Kurs-Unterlagen und fremde Wortlisten darfst du nicht weitergeben. Das gilt auch für Dateien, die du mit dem Programm daraus erzeugst (Exporte, MP3).",
+ ]),
+ ("Hinweis", [
+   "Diese Seite ist eine Information und keine Rechtsberatung. Bei Fragen zu Lizenzen schaue bitte in die Originaltexte der genannten Projekte.",
+ ]),
+]
+
+def esc(s):
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+def html():
+    h = ["<h1>%s</h1>" % esc(TITEL)]
+    for t, items in KAPITEL:
+        h.append("<h2>%s</h2>" % esc(t))
+        for it in items:
+            if isinstance(it, str):
+                h.append("<p>%s</p>" % esc(it))
+            else:
+                h.append("<ul>%s</ul>" % "".join("<li>%s</li>" % esc(x) for x in it[1]))
+    return "".join(h)
+
+def text():
+    o = [TITEL, "=" * len(TITEL), ""]
+    for t, items in KAPITEL:
+        o += [t, "-" * len(t)]
+        for it in items:
+            if isinstance(it, str):
+                o.append(it)
+            else:
+                o += ["  - " + x for x in it[1]]
+        o.append("")
+    return "\n".join(o)
+
+if __name__ == "__main__":
+    import sys
+    open(sys.argv[1], "w", encoding="utf-8").write(text())
