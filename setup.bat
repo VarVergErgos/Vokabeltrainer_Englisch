@@ -35,12 +35,9 @@ if errorlevel 1 (
 )
 mkdir voices 2>nul
 mkdir dl 2>nul
-for %%V in (en_US-lessac-medium en_US-ryan-medium) do (
+for %%V in (en_US-ryan-medium de_DE-thorsten-medium) do (
   if not exist "voices\%%V\%%V.onnx" (
-    if exist "D:\PiperStick\voices\%%V\%%V.onnx" (
-      echo  Kopiere Stimme %%V aus D:\PiperStick ...
-      xcopy /e /i /y "D:\PiperStick\voices\%%V" "voices\%%V" >nul
-    ) else (
+    (
       echo  Lade Stimme %%V ...
       curl.exe -L -o "dl\%%V.tar.bz2" "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-%%V.tar.bz2"
       tar.exe -xf "dl\%%V.tar.bz2" -C dl
