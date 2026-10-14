@@ -19,7 +19,7 @@ Ein privates Lernprogramm für Windows. Es läuft ohne Internet und ist für Men
 Windows kann melden „Der Computer wurde durch Windows geschützt“, weil das Programm nicht signiert ist. Dann *Weitere Informationen* und *Trotzdem ausführen*.
 
 ## Selbst bauen
-`setup.bat` (einmalig, holt Python-Pakete und die englische Stimme), `run.bat` zum Starten, `build.bat` baut die EXE, `build_installer.bat` das Setup (Inno Setup 6 nötig).
+`setup.bat` (einmalig, holt Python-Pakete und die Stimmen Ryan (Englisch) und Thorsten (Deutsch)), `run.bat` zum Starten, `build.bat` baut die EXE, `build_installer.bat` das Setup (Inno Setup 6 nötig).
 
 ## Gebaut mit
 Python, PySide6/Qt (LGPL), SQLite, sherpa-onnx (Apache-2.0) mit Piper-Stimmen, lameenc (LGPL), openpyxl, python-docx, numpy, reportlab, PyInstaller, Inno Setup. Entwickelt im Dialog mit der KI Claude (Anthropic). Alle Lizenzen: `LIZENZEN.txt` und im Programm unter *Info & Lizenzen*.
