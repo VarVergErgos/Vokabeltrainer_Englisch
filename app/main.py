@@ -6,7 +6,7 @@ from PySide6.QtGui import QFont
 from PySide6.QtWidgets import (QApplication, QWidget, QMainWindow, QHBoxLayout, QVBoxLayout, QLabel, QPushButton,
                                QStackedWidget, QButtonGroup, QComboBox, QScrollArea, QFrame, QSlider, QCheckBox,
                                QTableWidget, QTableWidgetItem, QHeaderView, QFileDialog, QMessageBox, QAbstractItemView, QInputDialog)
-import db, importer, speech, quiz, editor, helptext, sprachdusche, sd_import, search, mp3export, lizenzen
+import db, importer, speech, quiz, editor, helptext, sprachdusche, sd_import, search, mp3export, lizenzen, grammatik
 from paths import p
 
 THEMES = {
@@ -371,6 +371,7 @@ class MainWindow(QMainWindow):
         self.settings = SettingsPage(conn, self.do_import)
         self.quiz = quiz.QuizPage(conn, self.speak, lambda: self.user.currentText(), self.set_status)
         self.progress = quiz.ProgressPage(conn, self.bar_colors)
+        self.gram = grammatik.GrammatikPage(self.set_status)
         self.help = HelpPage(); self.info = InfoPage()
         self.sd_scope = db.Scope("sd")
         self.sd_listen = ListenPage(conn, self.speaker, self.set_status, self.sd_scope)
@@ -382,12 +383,13 @@ class MainWindow(QMainWindow):
                  ("❓  Abfrage", self.quiz),
                  ("✏️  Kapitel", self.chapters),
                  ("🎧  MP3 erstellen", self.mp3),
+                 ("📘  Grammatik und Zeiten", self.gram),
                  ("📚  Sprachduschen", self.sd),
                  ("🔎  Suchen", self.search),
                  ("📊  Fortschritt", self.progress),
                  ("⚙️  Einstellungen", self.settings),
                  ("📖  Hilfe", self.help),
-                 ("ℹ️  Info & Lizenzen", self.info)]
+                 ("ℹ️  Info && Lizenzen", self.info)]
         grp = QButtonGroup(self); grp.setExclusive(True); self.grp = grp
         for i, (name, page) in enumerate(pages):
             b = QPushButton(name); b.setObjectName("nav"); b.setCheckable(True); grp.addButton(b, i); sv.addWidget(b)
@@ -426,6 +428,8 @@ class MainWindow(QMainWindow):
             self.search.refresh()
         elif w is self.mp3:
             self.mp3.refresh()
+        elif w is self.gram:
+            self.gram.refresh()
         if w is not self.listen:
             self.listen.stop()
         if w is not self.sd:
