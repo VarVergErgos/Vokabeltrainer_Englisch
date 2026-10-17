@@ -32,6 +32,9 @@ Name: "desktopicon"; Description: "Symbol auf dem Desktop anlegen"; GroupDescrip
 Source: "LIZENZEN.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "installer_staging\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs ignoreversion
 
+[Dirs]
+Name: "{app}\Grammatik"
+
 [Icons]
 Name: "{autoprograms}\Vokabeltrainer Englisch B1"; Filename: "{app}\Vokabeltrainer.exe"; WorkingDir: "{app}"
 Name: "{autodesktop}\Vokabeltrainer Englisch B1"; Filename: "{app}\Vokabeltrainer.exe"; WorkingDir: "{app}"; Tasks: desktopicon

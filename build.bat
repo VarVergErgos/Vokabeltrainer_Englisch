@@ -20,6 +20,7 @@ if errorlevel 1 (
 xcopy /e /i /y voices "dist\Vokabeltrainer\voices" >nul
 xcopy /e /i /y daten "dist\Vokabeltrainer\daten" >nul
 xcopy /e /i /y docs "dist\Vokabeltrainer\docs" >nul
+if exist Grammatik xcopy /e /i /y Grammatik "dist\Vokabeltrainer\Grammatik" >nul
 if exist vokabeln.db copy /y vokabeln.db "dist\Vokabeltrainer\" >nul
 if exist bilder xcopy /e /i /y bilder "dist\Vokabeltrainer\bilder" >nul
 echo.

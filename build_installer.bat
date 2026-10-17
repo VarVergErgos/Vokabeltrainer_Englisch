@@ -23,7 +23,7 @@ if "%ISCC%"=="" (
 )
 echo  Bereinigte Kopie ohne persoenliche Daten wird vorbereitet ...
 if exist installer_staging rmdir /s /q installer_staging
-robocopy "dist\Vokabeltrainer" "installer_staging" /E /XD bilder cache sicherung export export_MP3 /XF vokabeln.db fehler.log selftest.txt sprachduschen.json Vokabeltrainer_Englisch_B1.xlsx Audiate_Saetze_Englisch_Deutsch.xlsx >nul
+robocopy "dist\Vokabeltrainer" "installer_staging" /E /XD bilder cache sicherung export export_MP3 Grammatik /XF vokabeln.db fehler.log selftest.txt sprachduschen.json Vokabeltrainer_Englisch_B1.xlsx Audiate_Saetze_Englisch_Deutsch.xlsx >nul
 if errorlevel 8 (
   echo  FEHLER beim Kopieren. Bitte Foto dieses Fensters an Claude schicken.
   pause
@@ -34,7 +34,7 @@ rem Sicherheitspruefung: private Dateien duerfen NICHT in der Kopie sein
 set "BAD="
 for %%F in (vokabeln.db daten\sprachduschen.json daten\Vokabeltrainer_Englisch_B1.xlsx daten\Audiate_Saetze_Englisch_Deutsch.xlsx) do if exist "installer_staging\%%F" set "BAD=%%F"
 if exist "installer_staging\voices\en_US-lessac-medium" set "BAD=voices\en_US-lessac-medium"
-for %%D in (bilder sicherung export export_MP3 cache) do if exist "installer_staging\%%D" set "BAD=%%D"
+for %%D in (bilder sicherung export export_MP3 Grammatik cache) do if exist "installer_staging\%%D" set "BAD=%%D"
 if defined BAD (
   echo  STOPP: Private Daten gefunden: %BAD%
   echo  Der Installer wird NICHT erzeugt. Bitte Foto an Claude schicken.

@@ -28,6 +28,7 @@ Das Programm startet leer. Du legst eigene Kapitel an oder liest sie aus Excel e
 - **Vorlesen** von Wörtern und Sätzen mit einstellbarem Tempo und Hörhilfe
 - **Abfrage** mit Karteikarten in drei Richtungen (Englisch → Deutsch, Deutsch → Englisch, Hören → Schreiben). Das Programm fragt nach 1, 3, 7 und 14 Tagen wieder
 - **Eigene Kapitel** mit Bildern, Export als MP3, PDF, Excel und TXT
+- **Grammatik und Zeiten**: zeigt alle PDFs aus dem Ordner `Grammatik` in einer Liste und öffnet sie per Doppelklick (der Ordner ist nach der Installation leer, du legst eigene PDFs hinein)
 - **MP3 mit Übersetzung** (Deutsch und Englisch) zum Anhören unterwegs
 - Suche, Fortschrittsanzeige, mehrere Benutzer
 
