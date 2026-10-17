@@ -137,6 +137,7 @@ table.tab{border-collapse:collapse;width:100%;margin-top:14px;font-size:calc(var
 .help .card h3{margin-top:0}
 .help p,.help li{font-size:calc(var(--fs) - 2px)}
 .help ul{margin:4px 0 8px;padding-left:22px}
+tr.qbad td{background:#fde2e2;color:#222}tr.qok td{background:#dff3e3;color:#222}
 .empty{border:2px dashed var(--line);border-radius:12px;padding:26px;text-align:center;color:var(--muted);margin-top:16px}
 mark{background:#ffe27a;color:#111;border-radius:3px;padding:0 2px}
 /* ---------- Modal ---------- */
@@ -163,6 +164,8 @@ mark{background:#ffe27a;color:#111;border-radius:3px;padding:0 2px}
 .xl td{border:1px solid #dfe3e6;padding:3px 8px;white-space:nowrap}
 .xl td.h{background:#0b7a75;color:#fff;font-weight:700}
 .xl td.t{font-weight:700;font-size:15px}
+.xl td.r{background:#fde2e2}
+.xl td.gn{background:#dff3e3}
 .xl td.g{background:#f2f4f5;color:#555}
 .xl .sheets{display:flex;gap:2px;background:#e9ecef;padding:4px 6px;border-top:1px solid #cfd4d9;position:sticky;left:0}
 .xl .sheets span{padding:3px 12px;border-radius:0 0 5px 5px;background:#d8dde1;color:#333;font-size:12px}
@@ -215,6 +218,7 @@ footer.pg{padding-block:30px;color:var(--muted);font-size:14px;border-top:1px so
     <a href="#sim" data-i="nav_sim">Simulation</a>
     <a href="#install" data-i="nav_inst">Installation</a>
     <a href="#licenses" data-i="nav_lic">Lizenzen</a>
+    <a href="#template" data-i="nav_tpl">Excel-Muster</a>
   </nav>
   <div class="tools">
     <div class="seg" role="group" aria-label="Sprache / Language">
@@ -230,6 +234,7 @@ footer.pg{padding-block:30px;color:var(--muted);font-size:14px;border-top:1px so
 <section id="sim"><div class="wrap" id="simc"></div></section>
 <section id="install"><div class="wrap" id="instc"></div></section>
 <section id="licenses"><div class="wrap" id="licc"></div></section>
+<section id="template"><div class="wrap" id="tplc"></div></section>
 </main>
 <footer class="pg"><div class="wrap" id="foot"></div></footer>
 <div class="ov" id="ov" role="dialog" aria-modal="true"><div class="dlg" id="dlg"></div></div>
@@ -245,7 +250,7 @@ add('b_off','Ohne Internet','No internet needed');add('b_priv','Nur privat, nich
 add('btn_dl','⬇ Setup herunterladen (GitHub Releases)','⬇ Download setup (GitHub Releases)');add('btn_try','▶ Simulation ausprobieren','▶ Try the simulation');add('btn_lic','Lizenzen & Hinweise','Licenses & notices');
 add('hero_note','<b>Wichtig:</b> Diese Seite ist eine <b>Simulation</b>. Sie zeichnet die Oberfläche nach. Alle Beispiele sind frei erfunden, es sind keine Kursinhalte enthalten. Das echte Programm ist auf Deutsch, die englische Ansicht hier dient nur zur Erklärung.','<b>Please note:</b> This page is a <b>simulation</b>. It redraws the user interface. All examples are invented; no course material is included. The real program is in German; the English view here is for explanation only.');
 add('feat_h','Was kann das Programm?','What can it do?');
-add('feat_sub','Acht Bereiche, in einem Ordner, ohne Internet. Klicke unten auf „Simulation“, um jeden Bereich selbst auszuprobieren.','Eight areas in a single folder, no internet needed. Open “Simulation” below to try each area yourself.');
+add('feat_sub','Neun Bereiche, in einem Ordner, ohne Internet. Klicke unten auf „Simulation“, um jeden Bereich selbst auszuprobieren.','Nine areas in a single folder, no internet needed. Open “Simulation” below to try each area yourself.');
 const F=[
 ['🔊','Vorlesen','Listen','Wörter und Sätze werden vorgelesen. Tempo 0,6 bis 1,2, Hörhilfe hebt hohe Töne an, zwei englische Stimmen sind möglich.','Words and sentences are read aloud. Tempo 0.6 to 1.2; the hearing aid mode boosts high tones.'],
 ['❓','Abfrage','Quiz','Karteikarten in drei Richtungen: Englisch→Deutsch, Deutsch→Englisch, Hören→Schreiben. Wiederholung nach 1, 3, 7 und 14 Tagen.','Flashcards in three directions: English→German, German→English, Listen→Write. Repetition after 1, 3, 7 and 14 days.'],
@@ -254,6 +259,7 @@ const F=[
 ['📤','Export','Export','Jedes Kapitel als PDF, Excel, TXT oder MP3. Praktisch zum Drucken oder zum Lernen unterwegs.','Export any chapter as PDF, Excel, TXT or MP3. Handy for printing or learning on the go.'],
 ['🎧','MP3 mit Übersetzung','MP3 with translation','Deutsch, Pause, Englisch, Pause: eine MP3 je Kapitel, dazu eine Excel-Datei mit denselben Zeilen. Pausen einstellbar.','German, pause, English, pause: one MP3 per chapter plus an Excel file with the same rows. Pauses adjustable.'],
 ['🔎','Suchen','Search','Deutsch und Englisch finden. Umlaute sind egal: „apfel“ findet „Äpfel“. Optional ganzes Wort und Beispielsätze.','Find German and English. Umlauts don’t matter: “apfel” finds “Äpfel”. Optional whole word and example sentences.'],
+['📘','Grammatik und Zeiten','Grammar and tenses','Alle PDFs aus dem Ordner „Grammatik“ in einer Liste: Leitfäden zu den Zeiten, Tests, eigene Unterlagen. Mit Suche, Doppelklick öffnet die Datei.','All PDFs from the “Grammatik” folder in one list: guides to the tenses, tests, your own material. With search; double-click opens the file.'],
 ['📊','Fortschritt','Progress','Fortschritt je Kapitel in Prozent, Lernserie in Tagen, mehrere Benutzer, Sicherung mit Datum, Schriftgröße, hell/dunkel.','Progress per chapter in percent, daily streak, several users, dated backups, font size, light/dark.']
 ];
 add('hear_h','Gebaut für Menschen mit Hörverlust','Built for people with hearing loss');
@@ -292,6 +298,12 @@ add('x3_ok','Import fertig','Import finished');add('x3_p','Neues Kapitel angeleg
 add('f_pdf','PDF-Vorschau','PDF preview');add('f_xls','Excel-Vorschau','Excel preview');add('f_txt','TXT-Vorschau','TXT preview');
 add('dl_saving','Wird gespeichert …','Saving …');add('dl_done','Gespeichert in den Ordner „export“.','Saved to the “export” folder.');add('dl_open','Datei öffnen','Open file');
 add('pdf_h','Kapitel','Chapter');add('pdf_foot','Erstellt mit dem Vokabeltrainer Englisch B1 · nur für private Nutzung','Created with Vocabulary Trainer English B1 · private use only');
+add('m_gram','📘  Grammatik und Zeiten','📘  Grammar and tenses');
+add('g_title','Grammatik und Zeiten','Grammar and tenses');add('g_sub','Alle PDF-Dateien aus dem Ordner „Grammatik“. Doppelklick oder „Öffnen“ zeigt die Datei in deinem PDF-Programm.','All PDF files from the “Grammatik” folder. Double-click or “Open” shows the file in your PDF viewer.');
+add('g_ph','Suchen, z. B. Present oder Test','Search, e.g. Present or Test');add('g_open','📄 Öffnen','📄 Open');add('g_folder','📂 Ordner öffnen','📂 Open folder');add('g_reload','↻ Neu einlesen','↻ Reload');add('g_folder_t','Ordner: C:\\Vokabeltrainer\\Grammatik','Folder: C:\\Vokabeltrainer\\Grammatik');
+add('g_nr','Nr.','No.');add('g_ti','Titel','Title');add('g_art','Art','Type');add('g_size','Größe','Size');add('g_guide','Leitfaden','Guide');add('g_test','Test','Test');add('g_coll','Sammlung','Collection');
+add('g_note','Beispiel: Hier sind erfundene Beispiel-PDFs aufgelistet. Im echten Programm erscheinen deine eigenen Dateien aus dem Ordner „Grammatik“. Er ist nach der Installation leer.','Example: invented sample PDFs are listed here. In the real program your own files from the “Grammatik” folder appear. It is empty after installation.');
+add('g_prev','PDF-Vorschau (Beispiel)','PDF preview (example)');add('g_opened','Geöffnet: ','Opened: ');add('g_none','Nichts gefunden.','Nothing found.');add('g_sim_open','Im echten Programm öffnet sich jetzt dein PDF-Programm.','In the real program your PDF viewer opens now.');
 add('m_title','MP3 erstellen','Create MP3');add('m_sub','Je Kapitel entsteht eine MP3 mit Übersetzung und eine Excel-Datei mit denselben Zeilen. Ordner: export_MP3','One MP3 with translation and one Excel file with the same rows are created per chapter. Folder: export_MP3');
 add('m_order','Reihenfolge','Order');add('m_o1','Deutsch, dann Englisch','German, then English');add('m_o2','Englisch, dann Deutsch','English, then German');add('m_p1','Pause nach der ersten Sprache (s)','Pause after first language (s)');add('m_p2','Pause nach jedem Paar (s)','Pause after each pair (s)');
 add('m_all','Alle auswählen','Select all');add('m_none','Keine','None');add('m_go','MP3 und Excel erstellen','Create MP3 and Excel');add('m_stop','Abbrechen','Cancel');add('m_pick','Bitte mindestens ein Kapitel anhaken.','Please tick at least one chapter.');
@@ -325,6 +337,7 @@ const HELP={de:[
 ['Eigene Kapitel','Neues Kapitel anlegen, Einträge eintippen, Bilder per Datei oder Strg+V einfügen. Doppelte Sätze werden gemeldet. Export als MP3, PDF, Excel oder TXT.'],
 ['Kapitel aus Excel','daten\\Kapitel_Vorlage.xlsx ausfüllen (Titel in B1, Einträge ab Zeile 5), speichern, dann Kapitel › „Kapitel aus Excel“ wählen.'],
 ['MP3 erstellen','Kapitel anhaken, Reihenfolge und Pausen wählen, „MP3 und Excel erstellen“. Die Dateien liegen im Ordner export_MP3.'],
+['Grammatik und Zeiten','Zeigt alle PDFs aus dem Ordner „Grammatik“. Doppelklick öffnet die Datei, „Neu einlesen“ liest den Ordner neu. Eigene PDFs einfach in den Ordner kopieren.'],
 ['Suchen','Deutsch oder Englisch tippen. Umlaute sind egal. Optional „Ganzes Wort“ und „Auch in Beispielsätzen“.'],
 ['Installation','Vokabeltrainer_Setup.exe starten. Keine Administratorrechte nötig. Vorschlag: C:\\Vokabeltrainer, möglich ist auch D:\\Vokabeltrainer.'],
 ['Nur privat','Das Programm ist nur für private, nicht-kommerzielle Nutzung. Mehr dazu unter „Info & Lizenzen“.']],
@@ -335,6 +348,7 @@ en:[
 ['Your own chapters','Create a chapter, type items, add pictures by file or Ctrl+V. Duplicates are reported. Export as MP3, PDF, Excel or TXT.'],
 ['Chapter from Excel','Fill in daten\\Kapitel_Vorlage.xlsx (title in B1, items from row 5), save, then choose Chapters › “Chapter from Excel”.'],
 ['Create MP3','Tick chapters, choose order and pauses, “Create MP3 and Excel”. The files are in the folder export_MP3.'],
+['Grammar and tenses','Shows all PDFs from the “Grammatik” folder. Double-click opens the file; “Reload” reads the folder again. Just copy your own PDFs into the folder.'],
 ['Search','Type German or English. Umlauts don’t matter. Optional “Whole word” and “Also in example sentences”.'],
 ['Installation','Run Vokabeltrainer_Setup.exe. No administrator rights needed. Suggested: C:\\Vokabeltrainer; D:\\Vokabeltrainer is also possible.'],
 ['Private use only','The program is for private, non-commercial use only. See “Info & Licenses”.']]};
@@ -384,6 +398,37 @@ const CH0=[
 const XLCH={t:{de:'Einkaufen',en:'Shopping'},about:{de:'Im Laden und an der Kasse',en:'In the shop and at the till'},items:[
 ['How much is this?','Wie viel kostet das?'],['the receipt','der Kassenbon'],['cheaper','billiger'],
 ['Can I pay by card?','Kann ich mit Karte zahlen?'],['a size smaller','eine Größe kleiner'],['to try on','anprobieren']]};
+
+add('nav_tpl','Excel-Muster','Excel template');
+add('d_qres','📋 Abfrage-Auswertung','📋 Quiz result');add('d_gpdf','📕 Grammatik-PDF hinzufügen','📕 Add grammar PDF');
+add('qr_ok','Gewusst','Knew it');add('qr_bad','Nochmal lernen','Learn again');add('qr_2ok','2. Versuch richtig','2nd try correct');add('qr_2bad','2. Versuch falsch','2nd try wrong');
+add('qr_known','gewusst','known');add('qr_learn','nochmal lernen','to learn again');add('qr_leg','Rot = nochmal lernen, grün = gewusst. Die roten Karten stehen oben.','Red = learn again, green = known. Red cards are listed first.');
+add('qr_col','Ergebnis','Result');add('qr_hard','Nur die Schwierigen nochmal','Only the difficult ones again');add('qr_pdf','Ergebnis als PDF','Result as PDF');add('qr_xls','Ergebnis als Excel','Result as Excel');add('q_new','Neue Runde','New round');
+add('qr_learn_h','Nochmal lernen','Learn again');add('qr_known_h','Gewusst','Known');add('qr_sheet','Ergebnis','Result');
+add('g_add','➕ PDF hinzufügen','➕ Add PDF');add('g_add_h','Neue PDF in den Ordner „Grammatik“ legen','Put a new PDF into the “Grammatik” folder');
+add('g_add1','Suche deine PDF-Datei, zum Beispiel im Ordner „Downloads“. Klicke sie an.','Find your PDF file, for example in the “Downloads” folder. Click it.');
+add('g_add2','Kopiere die Datei in den Ordner „Grammatik“ im Programmordner.','Copy the file into the “Grammatik” folder inside the program folder.');
+add('g_copy','Datei kopieren','Copy file');
+add('g_add3','Wechsle ins Programm: Menü „Grammatik und Zeiten“ und klicke auf „Neu einlesen“. Die Datei erscheint in der Liste.','Switch to the program: menu “Grammar and tenses”, then click “Reload”. The file appears in the list.');
+add('g_add_ok','Kopiert. Schließe dieses Fenster und klicke in der Liste auf „Neu einlesen“.','Copied. Close this window and click “Reload” in the list.');
+add('g_found','Neue Datei gefunden: Meine_Zeitenuebersicht.pdf','New file found: Meine_Zeitenuebersicht.pdf');add('g_nonew','Keine neue Datei gefunden.','No new file found.');
+add('tp_h','Muster: So füllst du die Excel-Datei','Template: how to fill in the Excel file');
+add('tp_sub','So sieht ein fertig gefülltes Blatt „Kapitel 1“ aus. Die Datei kannst du im Programm unter Kapitel > Kapitel aus Excel einlesen.','This is what a finished sheet “Chapter 1” looks like. You can load the file in the program under Chapters > Chapter from Excel.');
+add('tp_cells','Wohin kommt was?','What goes where?');
+add('tp_r1','<b>B1</b>: Titel des Kapitels (Pflicht).','<b>B1</b>: chapter title (required).');
+add('tp_r2','<b>B2</b>: Worum geht es (freiwillig).','<b>B2</b>: what it is about (optional).');
+add('tp_r3','<b>Zeile 4</b>: Überschriften. Nicht ändern.','<b>Row 4</b>: headings. Do not change.');
+add('tp_r4','<b>Ab Zeile 5</b>: eine Zeile = ein Wort oder ein Satz.','<b>From row 5</b>: one row = one word or sentence.');
+add('tp_r5','Bis zu 200 Zeilen pro Blatt. Mehr Kapitel = mehr Blätter.','Up to 200 rows per sheet. More chapters = more sheets.');
+add('tp_tips','Tipps','Tips');
+add('tp_t1','Englisch (A) und Deutsch (B) müssen in jeder Zeile stehen.','English (A) and German (B) must be filled in every row.');
+add('tp_t2','Aussprache so schreiben, wie man es liest, zum Beispiel „dhe bill“.','Write the pronunciation the way you would read it, for example “dhe bill”.');
+add('tp_t3','Das Blatt „Beispiel“ wird nicht eingelesen. Es zeigt nur, wie es geht.','The sheet “Example” is not imported. It only shows how it works.');
+add('tp_t4','Doppelte Einträge werden beim Einlesen übersprungen.','Duplicate entries are skipped on import.');
+add('tp_col','Spalte','Column');add('tp_what','Inhalt','Content');add('tp_write','Was schreibe ich hinein?','What do I write?');add('tp_ex','Beispiel','Example');
+add('tp_a','Das englische Wort oder der englische Satz.','The English word or sentence.');add('tp_b','Die deutsche Übersetzung.','The German translation.');
+add('tp_c','Wie man es ausspricht (freiwillig).','How to pronounce it (optional).');add('tp_d','Ein englischer Beispielsatz (freiwillig).','An English example sentence (optional).');add('tp_e','Der Beispielsatz auf Deutsch (freiwillig).','The example sentence in German (optional).');
+add('tp_dl_h','Leere Vorlage herunterladen','Download the empty template');add('tp_dl_p','Die Datei „Kapitel_Vorlage.xlsx“ liegt auch im Programmordner unter „daten“.','The file “Kapitel_Vorlage.xlsx” is also in the program folder under “daten”.');add('tp_dl','⬇ Kapitel_Vorlage.xlsx','⬇ Kapitel_Vorlage.xlsx');
 /* ===== Hilfsfunktionen ===== */
 let lang='de';
 try{const s=localStorage.getItem('vt_lang');if(s)lang=s;else if(!(navigator.language||'de').toLowerCase().startsWith('de'))lang='en'}catch(e){}
@@ -396,7 +441,7 @@ function item(a){return a.length>=5?{en:a[0],de:a[1],pr:a[2],xe:a[3],xd:a[4]}:a.
 XLCH.items=XLCH.items.map(a=>item(a));
 const S={page:'listen',cur:0,sel:0,tempo:0.9,hoer:true,fs:17,playing:-1,run:false,
   chs:CH0.map(c=>({t:c.t,items:c.items.map(item)})),st:{},streak:5,today:false,
-  q:{dir:'ed',ch:0,i:0,shown:false,fb:null,done:false,right:0},
+  q:{dir:'ed',ch:0,i:0,shown:false,fb:null,done:false,right:0,order:null,res:{},req:[]},
   mp3:{sel:[true,true,true],order:'de',p1:1.5,p2:3.0,res:null,log:'',busy:false},
   sr:{q:'',lang:'both',whole:false,ex:false},xl:{step:1,pick:false,sheet:'k1',done:false},
   w:{step:1,acc:false,dir:'C:\\Vokabeltrainer',desk:true,pct:0}};
@@ -436,12 +481,12 @@ function renderFoot(){$('#foot').innerHTML=`<p>${T('foot1')}</p><p>${T('foot2')}
 function licCards(){return `<div class="lic-grid">`+LIC[lang].map(c=>`<div class="card"><h3>${c[0]}</h3><ul>${c[1].map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')+`</div>`}
 function renderLic(){$('#licc').innerHTML=`<h2>${T('lic_h')}</h2><p class="sub">${T('lic_sub')}</p>${licCards()}`}
 /* ===== Simulation: Rahmen ===== */
-const MENU=[['listen','m_listen'],['quiz','m_quiz'],['chap','m_chap'],['mp3','m_mp3'],['sd','m_sd'],['search','m_search'],['prog','m_prog'],['set','m_set'],['help','m_help'],['info','m_info']];
+const MENU=[['listen','m_listen'],['quiz','m_quiz'],['chap','m_chap'],['mp3','m_mp3'],['gram','m_gram'],['sd','m_sd'],['search','m_search'],['prog','m_prog'],['set','m_set'],['help','m_help'],['info','m_info']];
 function renderSim(){
   $('#simc').innerHTML=`<h2>${T('sim_h')}</h2><p class="sub">${T('sim_sub')}</p>
   <div class="demos"><span class="lbl">${T('demo_l')}</span>
    <button class="btn sm" onclick="demo('excel')">${T('d_excel')}</button><button class="btn sm" onclick="demo('pdf')">${T('d_pdf')}</button>
-   <button class="btn sm" onclick="demo('xls')">${T('d_xls')}</button><button class="btn sm" onclick="demo('mp3')">${T('d_mp3')}</button><button class="btn sm" onclick="demo('quiz')">${T('d_quiz')}</button></div>
+   <button class="btn sm" onclick="demo('xls')">${T('d_xls')}</button><button class="btn sm" onclick="demo('mp3')">${T('d_mp3')}</button><button class="btn sm" onclick="demo('quiz')">${T('d_quiz')}</button><button class="btn sm" onclick="demo('qres')">${T('d_qres')}</button><button class="btn sm" onclick="demo('gpdf')">${T('d_gpdf')}</button></div>
   <div class="win"><div class="tb"><span><i></i>${T('brand')}</span><span class="ctl" aria-hidden="true">– ▢ ✕</span></div>
   <div class="app" id="app" style="--fs:${S.fs}px"><nav class="side" id="side" aria-label="Menü"></nav><div class="main"><div class="page" id="pg"></div><div class="status" id="stt" role="status"></div></div></div></div>`;
   drawSide();go(S.page,true);setStatus(T('status0'));
@@ -458,7 +503,9 @@ function demo(k){
    else if(k=='pdf'){go('chap');S.sel=0;re();exportFile('pdf')}
    else if(k=='xls'){go('chap');S.sel=0;re();exportFile('xls')}
    else if(k=='mp3'){go('mp3');S.mp3.sel=S.chs.map(()=>true);re();mp3Run()}
-   else if(k=='quiz'){go('quiz');S.q=Object.assign(S.q,{i:0,shown:false,fb:null,done:false,right:0});re()}
+   else if(k=='quiz'){go('quiz');qRestart()}
+   else if(k=='qres'){qDemoRes()}
+   else if(k=='gpdf'){go('gram');gAdd()}
   },350)}
 /* ===== Seiten ===== */
 const P={};
@@ -478,13 +525,14 @@ function playAll(){if(S.run){stopSpeak();re();return}S.run=true;re();let i=0;con
  const next=()=>{if(!S.run)return;if(i>=items.length){S.run=false;S.playing=-1;re();return}S.playing=i;mark();const e=document.querySelectorAll('.sent')[i];e&&e.scrollIntoView({block:'nearest'});speak(items[i].en,'en',()=>{i++;setTimeout(next,350)})};next()}
 /* -- Abfrage -- */
 function cards(){return S.chs[S.q.ch].items}
-P.quiz=()=>{const q=S.q,its=cards();
+function qOrd(){const q=S.q;if(!q.order)q.order=cards().map((_,i)=>i);return q.order}
+P.quiz=()=>{const q=S.q,its=cards(),ord=qOrd();
  const head=`<h2 class="pt">${T('q_title')}</h2><div class="muted">${T('q_sub')}</div>
  <div class="row" style="margin-top:12px">${chSelect('qch',q.ch,'qSetCh')}
  <select class="fld" onchange="qSetDir(this.value)" aria-label="Richtung">${[['ed','dir_ed'],['de','dir_de'],['ho','dir_ho']].map(d=>`<option value="${d[0]}" ${q.dir==d[0]?'selected':''}>${T(d[1])}</option>`).join('')}</select>
- <span class="chip">${T('card')} ${Math.min(q.i+1,its.length)}/${its.length}</span></div>`;
- if(q.done)return head+`<div class="qcard"><div class="q">🎉 ${T('q_done_h')}</div><p>${T('q_done_p')} (${q.right}/${its.length})</p><button class="b pri" onclick="qRestart()">${T('q_again')}</button></div>`;
- const it=its[q.i],lv=getSt(q.ch,q.i,q.dir);
+ <span class="chip">${T('card')} ${Math.min(q.i+1,ord.length)}/${ord.length}</span></div>`;
+ if(q.done)return head+qResult();
+ const ix=ord[q.i],it=its[ix],lv=getSt(q.ch,ix,q.dir);
  const dots=`<div class="dots" title="${T('stage')} ${lv}">${[1,2,3,4].map(n=>`<i class="${lv>=n?'f':''}"></i>`).join('')}</div>`;
  let body='';
  if(q.dir=='ho'){
@@ -497,18 +545,35 @@ P.quiz=()=>{const q=S.q,its=cards();
  }
  let fb='';if(q.fb){fb=`<div class="fb ${q.fb.ok?'ok':'bad'}">${q.fb.msg}</div><div style="margin-top:12px"><button class="b pri" onclick="qNext()">${T('x_next')} ›</button></div>`}
  return head+`<div class="qcard">${dots}${body}${fb}</div><p class="muted" style="text-align:center;font-size:14px;margin-top:12px">${T('q_hint')}</p>`};
+function qRows(){const its=cards(),q=S.q;const rows=[];Object.keys(q.res).forEach(k=>{const r=q.res[k],x=its[+k];rows.push({lern:!r.ok1,st:r.ok1?T('qr_ok'):T('qr_bad')+(r.ok2===true?' ('+T('qr_2ok')+')':r.ok2===false?' ('+T('qr_2bad')+')':''),x})});rows.sort((a,b)=>(b.lern-a.lern));return rows}
+function qResult(){const q=S.q,rows=qRows(),lern=rows.filter(r=>r.lern).length;
+ return `<div class="qcard" style="text-align:left"><div class="q" style="text-align:center">🎉 ${T('q_done_h')}</div><p style="text-align:center;font-weight:700;color:var(--accent)">${rows.length-lern} ${T('qr_known')}, ${lern} ${T('qr_learn')}.</p>
+ <p class="muted" style="text-align:center;font-size:14px;margin:0 0 10px">${T('qr_leg')}</p>
+ <table class="tab" style="margin-top:0"><thead><tr><th>${T('qr_col')}</th><th>${T('c_en')}</th><th>${T('c_de')}</th></tr></thead><tbody>`+rows.map(r=>`<tr class="${r.lern?'qbad':'qok'}"><td>${esc(r.st)}</td><td>${esc(r.x.en)}</td><td>${esc(r.x.de)}</td></tr>`).join('')+`</tbody></table>
+ <div class="row" style="justify-content:center;margin-top:14px">${lern?`<button class="b bad" onclick="qHard()">${T('qr_hard')}</button>`:''}<button class="b" onclick="qExport('pdf')">📄 ${T('qr_pdf')}</button><button class="b" onclick="qExport('xls')">📊 ${T('qr_xls')}</button><button class="b pri" onclick="qRestart()">${T('q_new')}</button></div></div>`}
+function qHard(){const q=S.q;const h=Object.keys(q.res).filter(k=>!q.res[k].ok1).map(Number);if(!h.length)return;Object.assign(q,{order:h,i:0,shown:false,fb:null,done:false,right:0,res:{},req:[]});re()}
+function qExport(kind){const rows=qRows(),lern=rows.filter(r=>r.lern).length,c=S.chs[S.q.ch];const nm='Ergebnis_'+({ed:'en_de',de:'de_en',ho:'hoeren'}[S.q.dir])+'_2026-10-17_1130',ext=kind=='pdf'?'pdf':'xlsx',title=T('q_title')+' – '+cname(c);let prev;
+ if(kind=='pdf'){const tb=(sel,col)=>`<table><thead><tr style="background:${col}"><th style="color:#111">${T('c_en')}</th><th style="color:#111">${T('c_de')}</th></tr></thead><tbody>${sel.map(r=>`<tr><td><b>${esc(r.x.en)}</b>${r.x.pr?`<br><span style="color:#555">[${esc(r.x.pr)}]</span>`:''}${r.x.xe?`<br><i>${esc(r.x.xe)}</i>`:''}</td><td>${esc(r.x.de)}${r.x.xd?`<br><i>${esc(r.x.xd)}</i>`:''}</td></tr>`).join('')}</tbody></table>`;
+  prev=`<div class="paper"><h4>${esc(title)}</h4><div class="m">17.10.2026 – ${rows.length} ${T('card')}: ${rows.length-lern} ${T('qr_known')}, ${lern} ${T('qr_learn')}</div><p style="font-size:15px;margin:10px 0 4px"><b>${T('qr_learn_h')} (${lern})</b></p>${lern?tb(rows.filter(r=>r.lern),'#fde2e2'):'<p>–</p>'}<p style="font-size:15px;margin:14px 0 4px"><b>${T('qr_known_h')} (${rows.length-lern})</b></p>${tb(rows.filter(r=>!r.lern),'#dff3e3')}<div class="ft">${T('pdf_foot')}</div></div>`}
+ else{const g=[{cells:[title],cls:['t']},{cells:[(rows.length)+' '+T('card')+': '+(rows.length-lern)+' '+T('qr_known')+', '+lern+' '+T('qr_learn')]},{cells:[]},{cells:[T('qr_col'),T('c_en'),T('c_de'),T('c_pr'),T('c_ex')+' (EN)',T('c_ex')+' (DE)'],c:'h'}];
+  rows.forEach(r=>{const k=r.lern?'r':'gn';g.push({cells:[r.st,r.x.en,r.x.de,r.x.pr||'',r.x.xe||'',r.x.xd||''],cls:[k,k,k,k,k,k]})});prev=xlGrid(g,[T('qr_sheet')],T('qr_sheet'))}
+ openDlg(`<header><span>${T(kind=='pdf'?'f_pdf':'f_xls')} – ${nm}.${ext}</span><button class="b" onclick="closeDlg()" aria-label="Close">✕</button></header><div class="bd"><div class="dlbar"><span>⬇</span><span><b>${nm}.${ext}</b><br><span class="muted" id="dls">${T('dl_saving')}</span></span><span class="p"><i id="dlp"></i></span></div>${prev}</div><footer><button class="b" onclick="closeDlg()">${T('x_close')}</button></footer>`);
+ requestAnimationFrame(()=>{const p=$('#dlp');if(p)p.style.width='100%'});setTimeout(()=>{const s=$('#dls');if(s)s.textContent=T('dl_done')},1200)}
+function qDemoRes(){go('quiz');const q=S.q;Object.assign(q,{dir:'ed',ch:0,i:0,shown:false,fb:null,done:true,right:0,order:null,req:[],res:{}});const n=cards().length;for(let i=0;i<n;i++){const bad=(i==1||i==3||i==6);q.res[i]=bad?{ok1:false,ok2:i!=6}:{ok1:true}};re()}
 function qSetCh(i){S.q.ch=i;qRestart()}
 function qSetDir(d){S.q.dir=d;qRestart()}
-function qRestart(){Object.assign(S.q,{i:0,shown:false,fb:null,done:false,right:0});re()}
+function qRestart(){Object.assign(S.q,{i:0,shown:false,fb:null,done:false,right:0,order:null,res:{},req:[]});re()}
 function qShow(){S.q.shown=true;re()}
-function qHear(){speak(cards()[S.q.i].en,'en')}
-function qAns(ok,msgExtra){const q=S.q,k=stKey(q.ch,q.i,q.dir),cur=S.st[k]||0;const ns=ok?Math.min(4,cur+1):0;S.st[k]=ns;if(ok)q.right++;
+function qHear(){speak(cards()[qOrd()[S.q.i]].en,'en')}
+function qAns(ok,msgExtra){const q=S.q,ix=qOrd()[q.i],k=stKey(q.ch,ix,q.dir),cur=S.st[k]||0;const ns=ok?Math.min(4,cur+1):0;S.st[k]=ns;
+ if(!q.res[ix])q.res[ix]={ok1:ok};else q.res[ix].ok2=ok;if(ok&&q.res[ix].ok2===undefined)q.right++;
+ if(!ok&&!q.req.includes(ix)){q.req.push(ix);q.order.push(ix)}
  const iv=[1,1,3,7,14][ns];const dd=iv==1?T('day1'):iv==3?T('days3'):iv==7?T('days7'):T('days14');
  q.fb={ok,msg:(msgExtra||'')+T('stage')+' '+ns+' · '+T('q_next')+' '+dd};S.today=true;re()}
-function qCheck(){const q=S.q;if(q.fb)return;const v=($('#qin')||{}).value||'';const it=cards()[q.i];
+function qCheck(){const q=S.q;if(q.fb)return;const v=($('#qin')||{}).value||'';const it=cards()[qOrd()[q.i]];
  const ok=norm(v).replace(/[^a-z0-9 ]/g,'').trim()==norm(it.en).replace(/[^a-z0-9 ]/g,'').trim()&&v.trim()!=='';
  qAns(ok,ok?T('q_ok')+' ':T('q_bad')+' <b>'+esc(it.en)+'</b> · ')}
-function qNext(){const q=S.q;q.fb=null;q.shown=false;q.i++;if(q.i>=cards().length)q.done=true;re();if(q.dir=='ho'&&!q.done)setTimeout(qHear,150)}
+function qNext(){const q=S.q;q.fb=null;q.shown=false;q.i++;if(q.i>=qOrd().length)q.done=true;re();if(q.dir=='ho'&&!q.done)setTimeout(qHear,150)}
 document.addEventListener('keydown',e=>{
   if(S.page!='quiz'||S.q.done||$('#ov').classList.contains('on'))return;
   const tag=(e.target.tagName||'').toLowerCase();if(tag=='input'||tag=='select'||tag=='textarea')return;
@@ -606,6 +671,34 @@ function mp3Run(){const m=S.mp3,idx=S.chs.map((_,i)=>i).filter(i=>m.sel[i]);if(!
 function mp3Sample(i){stopSpeak();S.run=true;const c=S.chs[i],m=S.mp3,list=c.items.slice(0,3);let k=0;const a=m.order=='de'?['de','en']:['en','de'];
  const next=()=>{if(!S.run||k>=list.length){S.run=false;return}const it=list[k];speak(it[a[0]],a[0],()=>setTimeout(()=>speak(it[a[1]],a[1],()=>{k++;setTimeout(next,Math.min(m.p2,3)*1000)}),Math.min(m.p1,3)*1000))};next();toast(T('m_play'))}
 function mp3View(i){const c=S.chs[i];openDlg(`<header><span>${T('f_xls')} – ${esc(mpName(i,c))}.xlsx</span><button class="b" onclick="closeDlg()" aria-label="Close">✕</button></header><div class="bd">${xlGrid(chRows(c,'mp3'),['Kapitel'],'Kapitel')}</div><footer><button class="b" onclick="closeDlg()">${T('x_close')}</button></footer>`)}
+/* -- Grammatik und Zeiten -- */
+const GR=[['Simple Present','g_guide',45],['Present Continuous','g_guide',45],['Simple Past','g_guide',46],['Past Continuous','g_guide',46],['Present Perfect Simple','g_guide',46],['Present Perfect Continuous','g_guide',47],['Used to','g_guide',54],['Einstufungstest Englisch','g_test',265],['Alle Leitfäden in einem','g_coll',346]];
+S.gq='';
+P.gram=()=>{const q=norm(S.gq),rows=GR.map((g,i)=>[i,g]).filter(r=>!q||norm(r[1][0]+' '+T(r[1][1])).includes(q));
+ return `<h2 class="pt">${T('g_title')}</h2><div class="muted">${T('g_sub')}</div>
+ <div class="row" style="margin-top:12px"><input class="fld" id="gq" placeholder="${T('g_ph')}" value="${esc(S.gq)}" oninput="S.gq=this.value;gFilter()" style="flex:1;min-width:160px" autocomplete="off"><span class="chip" id="gc">${rows.length==GR.length?GR.length+' PDF':rows.length+' / '+GR.length}</span></div>
+ <div id="gt">${gTable(rows)}</div>
+ <div class="row" style="margin-top:12px"><button class="b pri" onclick="gOpen(S.gsel||0)">${T('g_open')}</button><button class="b" onclick="toast(T('g_sim_open'))">${T('g_folder')}</button><button class="b" onclick="gReload()">${T('g_reload')}</button><button class="b" onclick="gAdd()">${T('g_add')}</button></div>
+ <p class="muted" style="font-size:14px;margin:10px 0 0">${T('g_folder_t')}</p><div class="note" style="margin:12px 0 0;font-size:14px">${T('g_note')}</div>`};
+function gTable(rows){if(!rows.length)return `<div class="empty">${T('g_none')}</div>`;
+ return `<table class="tab"><thead><tr><th style="width:56px;text-align:right">${T('g_nr')}</th><th>${T('g_ti')}</th><th>${T('g_art')}</th><th style="text-align:right">${T('g_size')}</th></tr></thead><tbody>`+
+ rows.map(r=>`<tr class="${(S.gsel||0)==r[0]?'hl':''}" style="cursor:pointer" onclick="S.gsel=${r[0]};gFilter()" ondblclick="gOpen(${r[0]})"><td style="text-align:right">${r[0]+1}</td><td>${esc(r[1][0])}</td><td>${T(r[1][1])}</td><td style="text-align:right">${r[1][2]} KB</td></tr>`).join('')+`</tbody></table>`}
+function gReload(){if(S.gcopied&&!S.gadded){S.gadded=true;GR.push(['Meine_Zeitenuebersicht','g_guide',120]);S.gsel=GR.length-1;re();setStatus(T('g_found'));toast(T('g_found'))}else{re();toast(T('g_nonew'))}}
+function gAdd(){const st=S.gcopied?2:1;
+ const ex=(pick,left)=>`<div class="fdlg" style="margin-top:8px"><div class="path">${left}</div>`+(pick?`<div class="it" role="option" aria-selected="${!!S.gpick}" tabindex="0" onclick="S.gpick=true;gAdd()">📕 Meine_Zeitenuebersicht.pdf <span style="margin-left:auto;opacity:.7">120 KB</span></div>`:'<div class="it" style="opacity:.6">📕 Meine_Zeitenuebersicht.pdf <span style="margin-left:auto">120 KB</span></div>')+`</div>`;
+ openDlg(`<header><span>${T('g_add_h')}</span><button class="b" onclick="closeDlg()" aria-label="Close">✕</button></header><div class="bd"><div class="steps"><i class="on"></i><i class="${S.gcopied?'on':''}"></i><i class="${S.gadded?'on':''}"></i></div>
+  <p><b>1.</b> ${T('g_add1')}</p>${ex(true,'C:\\Users\\Sigi\\Downloads')}
+  <p style="margin-top:12px"><b>2.</b> ${T('g_add2')}</p>${ex(S.gcopied,'C:\\Vokabeltrainer\\Grammatik')}
+  <div class="row" style="margin-top:10px"><button class="b ${S.gcopied?'':'pri'}" onclick="if(!S.gpick){toast(T('x_pick'));return}S.gcopied=true;gAdd()">${T('g_copy')}</button></div>
+  <p style="margin-top:12px"><b>3.</b> ${T('g_add3')}</p>
+  ${S.gcopied?`<div class="note ok" style="margin:8px 0 0">${T('g_add_ok')}</div>`:''}</div><footer><button class="b" onclick="closeDlg()">${T('x_close')}</button></footer>`)}
+function gFilter(){const q=norm(S.gq),rows=GR.map((g,i)=>[i,g]).filter(r=>!q||norm(r[1][0]+' '+T(r[1][1])).includes(q));$('#gt').innerHTML=gTable(rows);$('#gc').textContent=rows.length==GR.length?GR.length+' PDF':rows.length+' / '+GR.length}
+function gOpen(i){const g=GR[i];if(!g)return;setStatus(T('g_opened')+g[0]+'.pdf');
+ const de=lang=='de';const when=de?['Gewohnheiten und Routinen: „I drink tea every morning.“','Fakten und Regeln: „Water boils at 100 degrees.“','Fahrpläne und feste Termine: „The train leaves at 8.“']:['Habits and routines: “I drink tea every morning.”','Facts and rules: “Water boils at 100 degrees.”','Timetables and fixed dates: “The train leaves at 8.”'];
+ openDlg(`<header><span>${T('g_prev')} – ${esc(g[0])}.pdf</span><button class="b" onclick="closeDlg()" aria-label="Close">✕</button></header><div class="bd"><div class="paper" style="max-width:660px"><div class="m">${de?'GRAMMATIK-KOMPENDIUM • ENGLISCH B1':'GRAMMAR COMPENDIUM • ENGLISH B1'}</div><h4>${esc(g[0])}</h4><div class="m">${de?'Bedeutung, Bildung und Beispielsätze (Querformat A4) – Beispielseite':'Meaning, formation and example sentences (A4 landscape) – sample page'}</div>
+ <p style="font-size:14px;margin:0 0 6px"><b>1. ${de?'Wann benutzt man sie?':'When is it used?'}</b></p><ul style="font-size:14px;margin:0 0 12px;padding-left:20px">${when.map(w=>`<li>${w}</li>`).join('')}</ul>
+ <p style="font-size:14px;margin:0 0 6px"><b>2. ${de?'Bildung':'Formation'}</b></p><table><thead><tr><th>${de?'Satzart':'Sentence type'}</th><th>${de?'Muster':'Pattern'}</th></tr></thead><tbody><tr><td>+</td><td>I / you / we / they + verb · he / she / it + verb<b>+s</b></td></tr><tr><td>−</td><td>do not / does not + verb</td></tr><tr><td>?</td><td>Do / Does + subject + verb?</td></tr></tbody></table>
+ <div class="ft">${T('pdf_foot')} · 1/2</div></div></div><footer><button class="b" onclick="closeDlg()">${T('x_close')}</button></footer>`)}
 /* -- Zusatzbereich -- */
 P.sd=()=>`<h2 class="pt">${T('sd_title')}</h2><div class="muted">${T('sd_p')}</div><div class="empty">📚<br>${T('sd_e')}</div>`;
 /* -- Suchen -- */
@@ -663,11 +756,24 @@ function wGo(n){clearTimeout(wT);if(n<1)n=1;if(n==1){S.w.pct=0;S.w.acc=false}S.w
 function wRun(){const files=['Vokabeltrainer.exe','voices\\en_US-ryan-medium\\…','voices\\de_DE-thorsten-medium\\…','daten\\Kapitel_Vorlage.xlsx','docs\\Bedienungsanleitung_Vokabeltrainer.docx','LIZENZEN.txt'];
  const tick=()=>{if(S.w.step!=5)return;S.w.pct+=8;const p=$('#wp');if(p)p.style.width=Math.min(100,S.w.pct)+'%';const f=$('#wf');if(f)f.textContent=S.w.dir+'\\'+files[Math.min(files.length-1,Math.floor(S.w.pct/17))];
   if(S.w.pct>=100){S.w.step=6;renderInstall()}else wT=setTimeout(tick,260)};wT=setTimeout(tick,260)}
+/* ===== Excel-Muster ===== */
+const TPL_URL='https://github.com/VarVergErgos/Vokabeltrainer_Englisch/raw/main/daten/Kapitel_Vorlage.xlsx';
+const TPL=[['Wellness in the workplace','Wellness am Arbeitsplatz','wélnes in dhe wörk-pleis','',''],['Making progress','Fortschritte machen','mêiking prógres','We are making progress every week.','Wir machen jede Woche Fortschritte.'],['healthy','gesund','hélthi','Fruits and vegetables are healthy.','Obst und Gemüse sind gesund.'],['lose weight','abnehmen','lus wêit','They want to lose weight.','Sie wollen abnehmen.'],['My back hurts after work.','Mein Rücken schmerzt nach der Arbeit.','mai bäk hörts áfter wörk','','']];
+function renderTpl(){const de=lang=='de';
+ const g=[{cells:[T('x_title_lbl'),de?'Wellness am Arbeitsplatz':'Wellness in the workplace'],cls:['g','t']},{cells:[T('x_about'),de?'Fitness, Ernährung, Körperteile':'Fitness, healthy food, body parts'],cls:['g']},{cells:[]},{cells:[T('x_req'),T('x_reqd'),T('x_opt1'),T('x_opt2'),T('x_opt3')],c:'h'}];
+ TPL.forEach(r=>g.push({cells:r}));
+ const rule=[['A',T('x_req'),T('tp_a'),'healthy'],['B',T('x_reqd'),T('tp_b'),de?'gesund':'healthy (German)'],['C',T('x_opt1'),T('tp_c'),'hélthi'],['D',T('x_opt2'),T('tp_d'),'Fruits are healthy.'],['E',T('x_opt3'),T('tp_e'),de?'Obst ist gesund.':'Obst ist gesund.']];
+ $('#tplc').innerHTML=`<h2>${T('tp_h')}</h2><p class="sub">${T('tp_sub')}</p>
+ ${xlGrid(g,[T('t_guide'),T('t_ex'),T('t_k1')],T('t_k1'))}
+ <div class="grid" style="margin-top:20px"><div class="card"><h3>${T('tp_cells')}</h3><ul style="margin:0;padding-left:20px;color:var(--muted);font-size:15px"><li>${T('tp_r1')}</li><li>${T('tp_r2')}</li><li>${T('tp_r3')}</li><li>${T('tp_r4')}</li><li>${T('tp_r5')}</li></ul></div>
+ <div class="card"><h3>${T('tp_tips')}</h3><ul style="margin:0;padding-left:20px;color:var(--muted);font-size:15px"><li>${T('tp_t1')}</li><li>${T('tp_t2')}</li><li>${T('tp_t3')}</li><li>${T('tp_t4')}</li></ul></div></div>
+ <table class="tab" style="margin-top:20px"><thead><tr><th>${T('tp_col')}</th><th>${T('tp_what')}</th><th>${T('tp_write')}</th><th>${T('tp_ex')}</th></tr></thead><tbody>${rule.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${esc(r[3])}</td></tr>`).join('')}</tbody></table>
+ <div class="note ok" style="margin-top:20px"><b>${T('tp_dl_h')}</b><br>${T('tp_dl_p')}<div class="cta" style="margin-top:12px"><a class="btn pri" href="${TPL_URL}" target="_blank" rel="noopener">${T('tp_dl')}</a></div></div>`}
 /* ===== Start ===== */
 function renderAll(){
   document.querySelectorAll('[data-i]').forEach(e=>e.innerHTML=T(e.dataset.i));
   $('#bde').setAttribute('aria-pressed',lang=='de');$('#ben').setAttribute('aria-pressed',lang=='en');
-  renderHero();renderFeat();renderSim();renderInstall();renderLic();renderFoot();document.title=T('brand')+' – Simulation';
+  renderHero();renderFeat();renderSim();renderInstall();renderLic();renderTpl();renderFoot();document.title=T('brand')+' – Simulation';
 }
 document.documentElement.lang=lang;renderAll();
 </script></body></html>
