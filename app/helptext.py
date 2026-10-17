@@ -21,7 +21,7 @@ KAPITEL = [
  ]),
  ("Starten", [
    "Doppelklick auf run.bat im Ordner Vokabeltrainer. Beim allerersten Mal wird vorher setup.bat ausgeführt (einmalig, mit Internet).",
-   "Links siehst du die Menüpunkte: Vorlesen, Abfrage, Kapitel, MP3 erstellen, Sprachduschen, Suchen, Fortschritt, Einstellungen, Hilfe und Info & Lizenzen. Unten links steht, wer angemeldet ist.",
+   "Links siehst du die Menüpunkte: Vorlesen, Abfrage, Kapitel, MP3 erstellen, Grammatik und Zeiten, Sprachduschen, Suchen, Fortschritt, Einstellungen, Hilfe und Info & Lizenzen. Unten links steht, wer angemeldet ist.",
  ]),
  ("Vorlesen", [
    "Wähle oben ein Kapitel. Jede Zeile ist ein Wort oder Satz mit deutscher Übersetzung.",
@@ -104,6 +104,16 @@ KAPITEL = [
      "Excel verbessern: Datei öffnen, Text ändern, speichern. Danach „Vorhandene Excel-Datei verwenden“ ankreuzen und noch einmal erstellen. Die MP3 wird dann neu gemacht und die Excel-Datei bleibt, wie du sie gespeichert hast.",
    ]),
    ("tipp", "Eine MP3 mit vielen Zeilen dauert einige Minuten. Beim zweiten Mal geht es schneller, weil die Sprache gespeichert ist. Mit „Abbrechen“ stoppst du nach dem aktuellen Kapitel."),
+ ]),
+ ("Grammatik und Zeiten", [
+   "Dieser Bereich zeigt alle PDF-Dateien aus dem Ordner „Grammatik“ im Programmordner. Das können Leitfäden zu den Zeiten (Simple Present, Present Continuous, Simple Past und weitere), Einstufungstests oder deine eigenen Unterlagen sein.",
+   ("liste", [
+     "Die Liste zeigt Titel, Art (Leitfaden, Test, Sammlung) und Größe. Die Nummer am Dateianfang bestimmt die Reihenfolge.",
+     "Doppelklick auf eine Zeile oder „Öffnen“ zeigt die PDF in deinem PDF-Programm.",
+     "Suchfeld: tippe ein Stück vom Namen, z. B. „Present“ oder „Test“.",
+     "„Ordner öffnen“ zeigt den Ordner im Explorer. Kopiere dort neue PDFs hinein und klicke danach auf „Neu einlesen“.",
+   ]),
+   ("tipp", "Die PDFs gehören dir und bleiben auf deinem Rechner. Der Ordner Grammatik wird bei der Installation leer angelegt. Gib fremde Unterlagen nicht weiter."),
  ]),
  ("Sprachduschen (Zusatzbereich für eigene Lernbücher)", [
    "Dieser Zusatzbereich ist für den Inhalt von Lernbüchern, die du selbst besitzt und nutzen darfst. Er ist leer, bis du eine passende Datei einliest. Er ist getrennt von deinen eigenen Kapiteln. Er hat einen eigenen Lernstand und einen eigenen Fortschritt.",
